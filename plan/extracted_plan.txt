@@ -1,0 +1,1010 @@
+PROJECT MASTER EXECUTION PLAN
+ROOMMATE CONFLICT RESOLUTIONAND SHARED LIVING MANAGEMENT SYSTEM
+BCA 5th Semester Minor Project (BCA-508)
+IMS Noida | School of Information Technology | CCSU, Meerut
+Mission:  Build the smallest system that looks complete, works live, is academically defensible, costs ₹0 in normal use, and can be explained confidently in viva.
+Development Window: 7-23 October 2026
+Mandatory live review: 24 October 2026
+Team Working Document - Shareable with All Teammates
+1. Executive Brief: What We Are Actually Building
+This is a marks-optimized academic full-stack project, not a startup and not a production SaaS product. The project is intentionally designed to be small enough to build quickly with AI-assisted coding, yet substantial enough to demonstrate frontend engineering, backend APIs, authentication, relational database design, business logic, role-based access, deployment, testing, documentation, and viva readiness.
+Core principle  Working > ambitious. A stable 8-feature application that survives a live demonstration is worth more than a 25-feature application that breaks under questioning.
+One-line project definition:
+A web application for shared households to manage chores and common expenses, track individual contributions, calculate balances, and identify contribution imbalances through a shared dashboard.
+Academic positioning:
+The software is a shared household management and contribution-tracking system.
+The “conflict resolution” element is supported through transparent records and contribution visibility, not through a claimed psychological or AI diagnosis.
+The project uses synthetic demonstration data. No survey, interview, web-scraping, Kaggle dataset, or external research dataset is required.
+Advanced features such as AI insights, mobile apps, payment gateways, push notifications, and automated reminders are explicitly Future Scope, not MVP requirements.
+1.1 Frozen MVP Scope
+Priority
+Module
+Must work in live demo
+P0
+Authentication
+Register, login, logout, protected pages
+P0
+Households
+Create, join by invite code, member list, admin role
+P0
+Chores
+Create, view, update, complete, delete, points
+P0
+Expenses
+Add expense, payer, participants, equal split
+P0
+Balances
+Expected share, amount paid, net balance
+P0
+Dashboard
+Statistics, contribution chart, recent activity
+P0
+Admin
+Members, chores, expenses, management actions
+P0
+Deployment
+Live frontend + backend + database
+P1
+Polish
+Responsive layout, loading/empty/error states
+P2
+Future Scope
+AI, mobile, payment gateway, notifications, advanced analytics
+2. Scope Control and Anti-Waste Rules
+The project will fail if the team keeps adding features while the deployment deadline approaches. The following rules are binding for the build.
+No feature is added unless it improves marks, demo clarity, or a required synopsis section.
+No new library is introduced when an existing library or browser capability is sufficient.
+No database redesign after the core schema is approved without a documented reason.
+No refactor of working code merely because the AI suggests a “better architecture”.
+No real money movement. Expenses are records and calculations only; they are not payments.
+No external datasets. Seed synthetic records instead.
+No AI/ML model in the MVP. “AI analytics” belongs in Future Scope.
+No microservices. One Express API is enough.
+No complicated caching, queues, WebSockets, or background workers unless a later blocker proves they are necessary.
+Every completed feature must be committed to Git before starting the next major feature.
+Every live deployment change must be tested locally first.
+When a bug is found, fix the smallest root cause; do not ask the coding AI to rewrite the whole project.
+Definition of “done” for a feature  The UI works, the API works, the database persists the result, invalid input is handled, the feature survives refresh, and the feature is committed to Git.
+2.1 What We Will Deliberately Not Build
+Excluded item
+Reason
+Mobile app
+Consumes time without helping the required review
+Real payment gateway / UPI
+Adds credentials, security, compliance and demo risk
+AI chatbot
+Not needed to satisfy project objectives
+ML prediction
+No dataset and no need for a heavy model
+Email / WhatsApp automation
+Third-party configuration and rate limits
+Real-time chat
+Unnecessary complexity
+IoT / hardware
+Outside the academic scope
+Microservices
+Adds deployment and debugging overhead
+Production-grade observability
+Academic project does not need it
+3. Technology Stack and ₹0 Infrastructure Plan
+The stack is deliberately conventional so that the team can vibe-code it safely and explain it in a viva. The goal is to minimize paid services and avoid architecture that depends on expensive cloud infrastructure.
+Layer
+Choice
+Why this choice
+Frontend
+React + Vite
+Fast development, component model, common BCA viva topic
+Styling
+Tailwind CSS
+Rapid professional UI without building a CSS framework
+UI icons
+Lucide React
+Simple icon system, no custom asset work
+Charts
+Recharts
+Small dashboard charts for contribution and expenses
+Backend
+Node.js + Express
+Simple REST API, easy local and Render deployment
+Authentication
+Supabase Auth
+Avoid building password storage and session management ourselves
+Database
+PostgreSQL on Supabase
+Relational model fits users, households, tasks and expense splits
+Version control
+Git + GitHub
+Team collaboration, rollback, code history
+Frontend host
+Vercel Hobby
+Free hosting appropriate for a personal/non-commercial academic project
+Backend host
+Render Free
+Simple Node/Express web-service deployment
+Database host
+Supabase Free
+Small academic relational workload fits comfortably
+Editor
+VS Code
+Stable default for the whole team
+3.1 Current Free-Tier Assumptions (checked 7 Oct 2026)
+The following are planning assumptions rather than permanent guarantees; providers can change quotas and terms. We therefore keep the architecture portable and avoid depending on paid-only features.
+Service
+Current planning point
+Important caveat
+GitHub Free
+Unlimited public/private repositories for personal accounts
+Private repository feature set is more limited than paid tiers
+Vercel Hobby
+Free Hobby plan exists for personal/non-commercial use
+Provider may change Hobby limits/terms
+Render Free
+Free web services available for Node/Express
+Free web service sleeps after 15 minutes idle and can take about one minute to wake
+Supabase Free
+$0 plan; 500 MB database; limited free storage/egress
+Free projects can pause after inactivity; keep the project active before review
+Official references used for these assumptions: GitHub Pricing / Docs; Vercel Terms and Pricing; Render Free Services documentation; Supabase Pricing. See the source list at the end of this plan.
+Budget rule  Target project cost = ₹0. Do not buy a domain, paid database, paid hosting plan, paid API, or paid email/SMS service for the MVP.
+4. System Architecture
+The synopsis requires a high-level three-tier architecture. The implementation will follow that structure exactly, even though the deployment is distributed across free cloud services.
+USER BROWSER
+    │
+    │ HTTPS
+    ▼
+┌───────────────────────────────┐
+│ PRESENTATION TIER             │
+│ React + Vite + Tailwind       │
+│ Pages, forms, charts, state   │
+└──────────────┬────────────────┘
+               │ REST / JSON
+               ▼
+┌───────────────────────────────┐
+│ APPLICATION / API TIER        │
+│ Node.js + Express             │
+│ Auth middleware               │
+│ Validation + business logic   │
+│ Expense split calculations    │
+│ Role authorization            │
+└──────────────┬────────────────┘
+               │ Database/API access
+               ▼
+┌───────────────────────────────┐
+│ DATA TIER                     │
+│ Supabase Auth                 │
+│ PostgreSQL                    │
+│ users / households / tasks    │
+│ expenses / expense_splits     │
+└───────────────────────────────┘
+4.1 Deployment Topology
+GitHub repository
+   ├── frontend/ ───────────────► Vercel
+   │                               │
+   │                               ▼
+   │                           Public UI URL
+   │
+   └── backend/ ────────────────► Render
+                                   │
+                                   ▼
+                               REST API URL
+                                   │
+                                   ▼
+                              Supabase
+                       ┌──────────┴──────────┐
+                       │                     │
+                 Supabase Auth          PostgreSQL
+4.2 Architecture Rules
+Frontend never stores database credentials.
+Backend never contains hard-coded secrets.
+Environment variables are used for URLs and secret keys.
+Every API route validates the authenticated user and household membership.
+Database foreign keys enforce relational integrity.
+Dashboard values are derived from stored records rather than hard-coded numbers.
+5. Database Blueprint
+The database is intentionally small. Six application tables are sufficient to demonstrate relational design, foreign keys, 1:N relationships, and an M:N relationship resolved through a junction table.
+Table
+Purpose
+Key fields
+profiles
+Application profile linked to authenticated user
+id PK, email, full_name, role, created_at
+households
+Shared living group
+id PK, name, invite_code, created_by FK, created_at
+household_members
+Membership bridge between users and households
+id PK, household_id FK, user_id FK, role, joined_at
+tasks
+Chore records
+id PK, household_id FK, title, category, points, assigned_to FK, completed_by FK, status, due_date
+expenses
+Expense header record
+id PK, household_id FK, paid_by FK, description, amount, category, expense_date
+expense_splits
+Expense-to-user allocation bridge
+id PK, expense_id FK, user_id FK, share_amount
+5.1 Relationship Map
+profiles 1 ───── N household_members N ───── 1 households
+profiles 1 ───── N tasks
+households 1 ─── N tasks
+households 1 ─── N expenses
+expenses 1 ───── N expense_splits N ───── 1 profiles
+Conceptually:
+Users M:N Expenses via expense_splits
+5.2 Why expense_splits Exists
+An expense can be shared by multiple users and a user can participate in many expenses. This is an M:N relationship. Relational databases normally resolve that relationship through a junction table. Each expense_splits row records one participant and that participant’s share.
+5.3 Data Integrity Rules
+Every task belongs to exactly one household.
+Every expense belongs to exactly one household.
+Every expense split references a valid expense and valid user.
+A user cannot join the same household twice.
+Expense amount must be positive.
+Invite codes must be unique.
+Deletion rules should prevent orphaned records or explicitly cascade where safe.
+6. Backend and API Plan
+The backend will be a single Express application. It is intentionally not a collection of microservices. The API is REST-oriented and exposes only the operations required by the UI.
+6.1 Backend Folder Structure
+backend/
+├── src/
+│   ├── config/
+│   ├── middleware/
+│   ├── controllers/
+│   ├── routes/
+│   ├── services/
+│   ├── utils/
+│   ├── app.js
+│   └── server.js
+├── .env.example
+├── package.json
+└── README.md
+6.2 API Contract
+Method
+Endpoint
+Purpose
+GET
+/api/health
+Deployment health check
+GET
+/api/households/:id
+Read household details
+POST
+/api/households
+Create household and invite code
+POST
+/api/households/join
+Join using invite code
+GET
+/api/members
+List household members
+DELETE
+/api/members/:id
+Admin removes member
+POST
+/api/tasks
+Create chore
+GET
+/api/tasks
+List household chores
+PUT
+/api/tasks/:id
+Update chore
+DELETE
+/api/tasks/:id
+Delete chore
+POST
+/api/tasks/:id/complete
+Mark chore complete
+POST
+/api/expenses
+Create shared expense and splits
+GET
+/api/expenses
+List household expenses
+DELETE
+/api/expenses/:id
+Delete expense if authorized
+GET
+/api/dashboard/summary
+Summary statistics
+GET
+/api/dashboard/contributions
+Contribution statistics
+GET
+/api/dashboard/balances
+Expense balances
+6.3 HTTP Concepts to Know for Viva
+Concept
+Meaning
+GET
+Retrieve data
+POST
+Create data / trigger an action
+PUT
+Update data
+DELETE
+Remove data
+200
+Request succeeded
+201
+Resource created
+400
+Invalid request
+401
+Not authenticated
+403
+Authenticated but not allowed
+404
+Resource not found
+500
+Server-side failure
+7. Frontend and UI Plan
+The frontend should feel like a polished academic product: consistent spacing, readable typography, clear hierarchy, responsive layouts, and visible feedback after every important action.
+Page
+Purpose
+Core UI
+/
+Landing / marketing-style entry
+Navbar, hero, problem, features, CTA, footer
+/login
+User login
+Email, password, validation, submit, loading
+/register
+Account creation
+Name, email, password, confirmation
+/dashboard
+Main user control center
+Summary cards, charts, balances, activity, quick actions
+/household
+Household profile
+Name, invite code, member list
+/tasks
+Chore management
+Task table/cards, filters, create/edit modal
+/expenses
+Expense management
+Expense form, participants, split preview, history
+/members
+Member management
+Roles, member list, admin actions
+/admin
+Admin control panel
+Members, tasks, expenses, statistics, management actions
+7.1 Required Four Core Interfaces for Synopsis
+Interface
+Screen contents
+Landing / Home
+Brand, project value proposition, “How it works”, features, login/register CTA
+Login / Registration
+Email/password fields, validation, loading/error messages, account switch
+Main User Dashboard
+Household summary, contribution chart, expense balance, recent activity, quick actions
+Admin Management Panel
+Member table, chores, expenses, record controls, summary statistics
+7.2 UI Quality Checklist
+No broken links or dead buttons.
+Buttons show loading states during API calls.
+Forms show validation errors beside or below fields.
+Empty lists have useful empty-state messages.
+API failures show a human-readable message.
+Cards, buttons, inputs and tables use consistent spacing and typography.
+The main dashboard works on laptop and smaller screens.
+Admin controls are visually distinguishable from normal user actions.
+8. Core Business Logic
+The system needs only a small amount of real business logic, but that logic must be correct because it will be used in the demo and is likely to be asked about during viva.
+8.1 Expense Split
+Total Expense = T
+Number of Participants = N
+Equal Share per Participant = T / N
+Example: ₹2,400 electricity bill shared among 4 participants gives an equal share of ₹600 per participant. The system stores the individual allocations in expense_splits.
+8.2 Net Balance
+Net Balance = Amount Paid by User - Expected Contribution
+Positive balance means the user has paid more than their expected share. Negative balance means the user owes money relative to the shared records. This is an accounting-style record, not a payment transfer.
+8.3 Chore Contribution
+Chore Contribution = Sum of Points for Completed Chores by User
+Points are configurable demo values chosen to demonstrate the application. They are not presented as a scientific measure of human effort.
+8.4 Dashboard Contribution View
+The dashboard displays chore points and financial balances separately so users do not confuse “money contributed” with “household work completed”. This is both technically clearer and easier to defend in viva.
+Naming decision  Prefer “Household Contribution Balance” or “Contribution Overview” over a claim of a scientifically validated “Fairness Score”.
+9. Data Strategy: Zero Data-Gathering Time
+No manual data collection is required. The application is a software engineering project, not a research study. We will create a small synthetic dataset specifically to demonstrate functionality.
+Dataset block
+Example contents
+Household
+Green Residency
+Users
+Lakshya, Rahul, Aman, Rohit
+Chores
+Dishes, Garbage, Kitchen, Bathroom, Laundry
+Expense categories
+Electricity, Internet, Groceries, Water, Cleaning
+Expenses
+₹600, ₹1,200, ₹2,400, ₹1,500, etc.
+Membership
+All four users in one demo household
+Admin
+One designated household admin
+9.1 Seed Data Plan
+Create 1 demo household.
+Create 4 demo profiles.
+Create 10-15 chores across 5 categories.
+Create 8-12 expenses across 4-5 categories.
+Create multiple expense splits per expense.
+Complete a subset of chores so the dashboard has visible statistics.
+Include both positive and negative balances to make the dashboard meaningful.
+9.2 Demo Data Safety
+Do not use teammates’ real personal phone numbers, personal emails, or private financial information.
+Use clearly synthetic names or controlled demo accounts.
+Do not put secret keys into seed files.
+Keep all seed operations reversible and clearly documented.
+10. Vibe-Coding Operating System
+AI is the coding accelerator. The human team remains responsible for architecture, testing, security, deployment and understanding the project.
+10.1 Golden Workflow
+PLAN → PROMPT → AI IMPLEMENTS → RUN → TEST → REVIEW → COMMIT → NEXT FEATURE
+10.2 Mandatory Project Constitution
+PROJECT_RULES.md
+1. Do not change architecture without approval.
+2. Do not add unnecessary dependencies.
+3. Do not rewrite working modules unnecessarily.
+4. Keep frontend/backend separation.
+5. Keep REST endpoints predictable.
+6. Validate every input.
+7. Do not expose secrets in the client.
+8. Never commit .env.
+9. Preserve responsive UI.
+10. Test each feature before starting the next.
+11. Do not invent fake functionality.
+12. Stay inside the approved MVP scope.
+10.3 Standard Prompt Wrapper
+You are modifying an existing academic full-stack project.
+Before making changes:
+1. Inspect the current code.
+2. Understand the existing architecture.
+3. Do not rewrite working components.
+4. Do not change the database schema unless explicitly asked.
+5. Do not introduce unnecessary dependencies.
+6. Implement only the requested feature.
+7. Preserve existing behavior.
+8. Run the relevant build/test checks.
+9. Report changed files.
+10. Report unresolved issues.
+11. Do not touch unrelated files.
+10.4 Prompt Sequence
+Scaffold frontend and backend only; stop when the health endpoint works.
+Create the Supabase schema and migration; do not add unrelated tables.
+Implement authentication and protected routes.
+Implement household creation/join/member management.
+Implement chore CRUD and completion.
+Implement expense creation, participants and split calculations.
+Implement dashboard statistics and charts.
+Implement admin controls.
+Polish the UI without changing business logic.
+Add validation, authorization and error states.
+Prepare deployment configuration and environment variables.
+Run final audit and write README/API documentation.
+11. Development Phases - Detailed Execution Order
+Phase
+Deliverable
+Exit criterion
+Phase 0 - Governance
+Project rules, Git repository, scope lock, environment plan
+Done when README + PROJECT_RULES.md + empty app exist
+Phase 1 - Frontend shell
+React/Vite/Tailwind, routing, shared layout, auth pages
+Done when pages render cleanly without APIs
+Phase 2 - Backend shell
+Express, CORS, dotenv, error middleware, health endpoint
+Done when /api/health returns status ok
+Phase 3 - Database
+Supabase project, tables, keys, indexes, seed script
+Done when schema and sample records can be inserted/read
+Phase 4 - Auth
+Register/login/logout/session/protected routes
+Done when unauthorized users cannot open private pages
+Phase 5 - Household
+Create, join, members, roles
+Done when two or more demo users share one household
+Phase 6 - Chores
+CRUD, points, complete status
+Done when task updates persist after refresh
+Phase 7 - Expenses
+Create, split, history, delete
+Done when splits and balances are correct
+Phase 8 - Dashboard
+Summary cards, charts, activity, balances
+Done when values change after transactions
+Phase 9 - Admin
+Management views and authorized actions
+Done when normal users cannot perform admin-only actions
+Phase 10 - Quality
+Validation, error states, empty states, security audit
+Done when negative/invalid paths behave predictably
+Phase 11 - Deployment
+Vercel + Render + Supabase environment variables
+Done when full transaction works on live URL
+Phase 12 - Freeze
+Screenshots, synopsis diagrams, README, viva preparation
+Done when no critical bugs remain
+12. Testing and QA Plan
+Testing is lightweight but deliberate. The goal is to prove the main transaction works and to prevent embarrassing failures during the live review.
+Area
+Test cases
+Authentication
+Correct login, incorrect password, logout, session persistence, protected route
+Household
+Create household, valid join, invalid code, duplicate membership, member removal
+Chores
+Create, edit, complete, delete, missing title, invalid points
+Expenses
+Create, equal split, multiple participants, zero/negative amount rejected, delete
+Dashboard
+Statistics reflect newly created records, refresh retains values
+Authorization
+Non-member cannot read household data; normal user cannot use admin-only action
+API
+404, 400, 401, 403, 500 responses are handled cleanly
+Deployment
+Frontend, backend health endpoint, auth, database read/write all work remotely
+12.1 Minimum Manual Test Script
+Open live homepage in a clean browser window.
+Register or login with demo account.
+Create or join Green Residency.
+Open dashboard and confirm baseline statistics.
+Create “Clean Kitchen” for 20 points.
+Mark it complete.
+Create ₹2,400 Electricity expense for four participants.
+Confirm each participant share is ₹600.
+Open balances and contribution chart.
+Open admin panel and view the same records.
+Refresh the browser and verify data persists.
+Logout and verify the protected dashboard cannot be accessed without authentication.
+13. Deployment and Live-Review Survival Plan
+The college requires the project to be deployed and working at the first review. Deployment is therefore a core project requirement, not a final-day activity. The supplied department progress plan states that every project must be deployed and the coordinator will click the link during the 24 October review. [Source: departmental progress plan.]
+13.1 Deployment Steps
+Push stable code to GitHub.
+Create Supabase project and configure tables/Auth.
+Deploy backend as a Render Web Service.
+Add backend environment variables in Render.
+Confirm /api/health works on the public Render URL.
+Deploy React frontend to Vercel.
+Add backend API URL and public Supabase values as frontend environment variables where appropriate.
+Test login -> household -> chore -> expense -> dashboard end-to-end using the live frontend.
+Capture final URLs in README and team notes.
+Freeze the production branch before 24 October.
+13.2 Render Free-Tier Risk
+Important  Render Free web services spin down after 15 minutes without inbound traffic and can take about one minute to start again. This is the main presentation-day risk in the chosen stack.
+Mitigation: 5-10 minutes before the presentation, open the Render health endpoint, wait for status=ok, then open the Vercel frontend and perform one real transaction. Keep the tab active during the presentation.
+13.3 Backup Plan
+Keep the last known-good Git commit tagged as RELEASE-24-OCT.
+Keep the Supabase schema.sql and seed.sql in the repository.
+Keep screenshots/video of the live application as evidence, but use them only as backup - the live URL remains the primary demonstration.
+If the Render deployment repeatedly becomes unreliable, move the API to an alternative free-compatible deployment only after the MVP is stable. Do not maintain two production stacks unless necessary.
+14. Security and Reliability Minimums
+For an academic project, security means avoiding obvious mistakes rather than implementing enterprise security architecture.
+Control
+Implementation
+Authentication
+Supabase Auth
+Authorization
+Check authenticated user and household membership before protected operations
+Secrets
+Environment variables; never hard-code secrets
+Input validation
+Reject invalid amounts, missing titles, invalid codes and malformed requests
+Database integrity
+PKs, FKs, unique constraints, controlled deletes
+CORS
+Allow only the required frontend origin(s) in production
+Error responses
+Do not expose raw server errors or secrets to the client
+Git hygiene
+.env and credential files included in .gitignore
+Backup
+schema.sql + seed.sql + tagged release commit
+Demo safety
+Use synthetic accounts/data
+14.1 Viva Concepts to Understand
+Authentication = proving who the user is.
+Authorization = deciding what that authenticated user is allowed to do.
+Primary key = uniquely identifies a row.
+Foreign key = references a row in another table.
+1:N = one record can be related to many records.
+M:N = many records on both sides; usually implemented through a junction table.
+Environment variable = configuration/secret provided outside source code.
+API = interface through which the frontend requests backend operations.
+CRUD = create, read, update, delete.
+HTTPS = encrypted network transport between browser and server.
+15. Live Presentation Script
+The team should rehearse one predictable 5-7 minute demonstration. Never improvise the business flow while a panel is watching.
+Step
+What to show
+What to say
+1
+Landing page
+“This is the entry point for the shared household management system.”
+2
+Login
+“Authentication is handled through Supabase Auth.”
+3
+Dashboard
+“After login, the user sees household statistics and current contribution information.”
+4
+Household
+“Users can create or join a household using an invite code.”
+5
+Chore
+“I will add a chore and assign points to demonstrate contribution tracking.”
+6
+Complete chore
+“On completion, the contribution statistics update.”
+7
+Expense
+“I will add a ₹2,400 shared expense for four participants.”
+8
+Split
+“The application calculates an equal share of ₹600 per participant.”
+9
+Dashboard
+“The expense balance and contribution views update from database records.”
+10
+Admin
+“The admin can manage household records and view activity.”
+11
+Refresh
+“The data persists because records are stored in PostgreSQL.”
+Presentation rule  Do not demonstrate every screen. Demonstrate one complete transaction from login to database-backed dashboard update.
+16. Synopsis / Documentation Mapping
+The official brief requires 11 mandatory body sections in a fixed order. The implementation below gives each section a real source inside the project so the synopsis stays consistent with the deployed application.
+Required section
+Project evidence
+1. Introduction / Overview
+Problem of informal shared-household chores and expenses; system overview and objectives
+2. Performance
+Technical/operational/economic/schedule feasibility; expected capacity; latency and scalability discussion
+3. Project Architecture
+React presentation tier + Express API tier + Supabase/PostgreSQL data tier
+4. Project Flow
+Landing -> authentication -> household -> chore/expense -> calculation -> dashboard
+5. DFDs
+Level 0 context; Level 1 authentication/data management/core processing/reporting; Level 2 expense transaction
+6. Use Case
+User, household admin, system actions
+7. ERD
+profiles, households, household_members, tasks, expenses, expense_splits
+8. Hardware/Software
+Required development hardware, stack, GitHub, deployment platforms
+9. Future Scope
+Mobile, AI insights, reminders, payment gateway, advanced analytics, notifications, multi-household expansion
+10. Limitations
+Internet dependency, free-tier sleeping/quotas, manual entry, no real payment, single-household demo scope
+11. Front-End Pages
+Landing, login/registration, dashboard, admin panel plus supporting task/expense/member screens
+16.1 Diagram Set to Produce
+Architecture diagram
+End-to-end project flowchart
+Level 0 DFD (separate page)
+Level 1 DFD (separate page)
+Level 2 DFD (separate page)
+Use Case Diagram
+ERD
+Four UI mockup/wireframe pages
+17. Calendar Plan: 7-23 October 2026
+The schedule follows the official development window in the departmental progress plan. It intentionally reserves deployment, bug fixing, documentation and rehearsal before 24 October.
+Date
+Primary target
+Hard exit condition
+7 Oct
+Repository + project rules + frontend/backend shells
+Health endpoint works locally
+8 Oct
+Supabase + schema + seed setup
+Database CRUD works locally
+9 Oct
+Authentication
+Register/login/logout/protected routes work
+10 Oct
+Household create/join/members
+Two demo users can share one household
+11 Oct
+Member management
+Admin can manage membership safely
+12 Oct
+Chore module
+Create/update/complete/delete persists
+13 Oct
+Expense module
+Create/split/history works
+14 Oct
+Balance engine
+Balances verified with hand calculations
+15 Oct
+Dashboard
+Charts and statistics reflect database records
+16 Oct
+Admin panel
+Admin operations work; normal user blocked
+17 Oct
+UI polish
+Professional, responsive main screens
+18 Oct
+Validation/security/error states
+Invalid cases handled
+19 Oct
+Seed/demo data + full manual QA
+Full demo script passes
+20 Oct
+Deployment
+Live frontend/backend/database transaction works
+21 Oct
+Live bug fixing
+No P0/P1 deployment issues
+22 Oct
+Documentation + screenshots + diagrams
+Synopsis evidence matches implementation
+23 Oct
+Freeze + rehearsal
+Release tag created; team can explain project
+24 Oct
+FIRST LIVE REVIEW
+Open live URL and run rehearsed demo
+18. Viva Preparation Plan
+Do not try to memorize the entire codebase. Learn the architecture, data model, calculations, API flow, security basics and deployment story.
+Topic
+What you must be able to explain
+React
+Component, state, props, routing, API call flow
+Tailwind
+Utility-first styling and rapid UI development
+Node.js
+JavaScript runtime used for the backend
+Express
+HTTP server framework and route/middleware structure
+REST
+Resource-oriented API operations using HTTP methods
+PostgreSQL
+Relational database and why relationships matter
+Supabase
+Hosted PostgreSQL + authentication + API tooling
+Auth
+Registration, login, session and protected operations
+Authorization
+Household membership and admin permissions
+Database
+PK, FK, 1:N, M:N and junction tables
+Expense logic
+Equal split and net balance calculation
+Deployment
+GitHub -> Vercel/Render -> Supabase
+Testing
+Positive, negative, auth, authorization and deployment tests
+Limitations
+Free-tier hosting, internet dependency, manual entry, no real payments
+Future scope
+Mobile app, notifications, AI insights, payment gateway, advanced analytics
+18.1 Highest-Probability Questions
+Why did you choose this project?
+What exact problem are you solving?
+Explain the three-tier architecture.
+Why React instead of plain HTML/CSS/JS?
+Why Express?
+Why PostgreSQL?
+Why Supabase?
+What is a REST API?
+Explain authentication vs authorization.
+What is a primary key?
+What is a foreign key?
+Explain 1:N and M:N in your ERD.
+Why is expense_splits necessary?
+How is an expense split calculated?
+How is the dashboard generated?
+What if a user tries to access another household?
+What are your project limitations?
+How is the project deployed?
+What happens if the internet goes down?
+What would you add in future?
+How would you convert this into a mobile application?
+How did you test the application?
+Viva rule  You can use AI to help draft explanations and rehearse questions, but you must personally understand: architecture, database relationships, authentication/authorization, expense calculation, dashboard data flow, and deployment.
+19. Risk Register and Mitigation Plan
+Risk
+Probability
+Impact
+Mitigation
+AI generates broken architecture
+Medium
+High
+Use phased prompts; inspect before next phase
+Feature creep
+High
+High
+Frozen MVP and P0/P1/P2 priority labels
+Database schema drift
+Medium
+High
+Lock schema before UI expansion; keep schema.sql
+Render cold start
+High
+Medium
+Warm health endpoint before presentation
+Supabase inactivity pause
+Medium
+Medium
+Open/test project before presentation
+Secret committed to Git
+Low
+High
+Use .env + .gitignore + pre-push review
+Authorization bug
+Medium
+High
+Test cross-household access explicitly
+Live deployment fails
+Medium
+High
+Deploy by 20 Oct, not 23 Oct
+Team member absent
+Medium
+Medium
+Document setup and demo script; one person can run demo
+Last-minute code change breaks demo
+High
+High
+Freeze RELEASE-24-OCT and use change control
+Viva reveals shallow understanding
+Medium
+High
+Daily 20-minute viva revision from 18 Oct onward
+19.1 Severity Model
+P0 = blocks demo / data loss / cannot login
+P1 = core feature broken but workaround exists
+P2 = cosmetic or non-essential improvement
+20. Release Checklist: “Perfect Enough” Definition
+□ Git repository contains frontend, backend, database schema and documentation.
+□ No .env or secret credential is committed.
+□ Frontend builds successfully.
+□ Backend starts successfully.
+□ /api/health returns OK on local and live deployment.
+□ Supabase authentication works.
+□ Household creation/join works.
+□ Household membership is persisted.
+□ Chore CRUD works.
+□ Chore completion updates contribution data.
+□ Expense creation works.
+□ Equal split calculation is correct.
+□ Expense splits persist.
+□ Balances are correct after refresh.
+□ Dashboard statistics are database-driven.
+□ Admin-only actions are protected.
+□ Invalid input is handled cleanly.
+□ 404/401/403/500 conditions are not visually disastrous.
+□ Live frontend and backend URLs are documented.
+□ Live end-to-end transaction works.
+□ Final screenshots are captured.
+□ DFDs, Use Case and ERD match the actual implementation.
+□ UI mockups match the deployed pages.
+□ Final synopsis is consistent with the project.
+□ Team can answer the core viva questions.
+□ Release commit/tag is frozen before the presentation.
+21. Team Working Model
+The exact number of teammates is not specified in the source brief, so the project can be divided by responsibilities rather than by forcing everyone to code everything.
+Role
+Main responsibility
+Backup responsibility
+Project / Integration Lead
+Scope, architecture, Git, deployment, final integration
+Viva coordination
+Frontend Lead
+React pages, Tailwind, forms, dashboard UI
+UI screenshots
+Backend Lead
+Express routes, services, validation, API contracts
+Deployment troubleshooting
+Database / QA Lead
+Schema, seed data, relational tests, security checks
+Documentation evidence
+Documentation / Viva Lead
+Synopsis, diagrams, screenshots, viva questions
+Demo script / rehearsal
+21.1 Team Rule
+Single source of truth  All team members should work from one GitHub repository and the same PROJECT_RULES.md. Do not maintain separate “my version” and “your version” of the database schema.
+22. 24 October Presentation-Day Checklist
+□ Test the Render /api/health endpoint 5-10 minutes before presentation.
+□ Open the Vercel frontend and confirm the landing page loads.
+□ Login using the demo account.
+□ Open the dashboard before the panel arrives.
+□ Have the demo household ready.
+□ Keep the browser tab open so the backend stays awake after warm-up.
+□ Have the GitHub repository ready if the panel asks for code.
+□ Have architecture / ERD / DFD diagrams ready as backup.
+□ Know the expense split calculation by hand.
+□ Know why expense_splits exists.
+□ Know the difference between authentication and authorization.
+□ Know the live URLs.
+□ Do not make production changes immediately before the review.
+□ If something fails, switch to the documented fallback path instead of improvising.
+Presentation mindset  The panel does not need a perfect startup. They need evidence that the team designed, implemented, deployed and understands a functioning software system.
+23. Appendix A - Repository Blueprint
+roommate-conflict-resolver/
+│
+├── frontend/
+│   ├── src/
+│   │   ├── components/
+│   │   ├── pages/
+│   │   ├── layouts/
+│   │   ├── hooks/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   └── App.jsx
+│   └── package.json
+│
+├── backend/
+│   ├── src/
+│   │   ├── config/
+│   │   ├── middleware/
+│   │   ├── controllers/
+│   │   ├── routes/
+│   │   ├── services/
+│   │   ├── utils/
+│   │   ├── app.js
+│   │   └── server.js
+│   └── package.json
+│
+├── database/
+│   ├── schema.sql
+│   └── seed.sql
+│
+├── docs/
+│   ├── architecture.md
+│   ├── api.md
+│   └── screenshots/
+│
+├── .gitignore
+├── PROJECT_RULES.md
+└── README.md
+23.1 Suggested Environment Variables
+BACKEND
+PORT=5000
+SUPABASE_URL=...
+SUPABASE_ANON_KEY=...
+SUPABASE_SERVICE_ROLE_KEY=...
+FRONTEND_URL=http://localhost:5173
+FRONTEND
+VITE_API_URL=http://localhost:5000/api
+VITE_SUPABASE_URL=...
+VITE_SUPABASE_ANON_KEY=...
+Secret warning  The service-role key belongs only on the backend. Never expose it through VITE_* variables and never commit it to Git.
+23.2 Suggested Git Commit Milestones
+init: project skeleton
+feat: frontend shell
+feat: express api shell
+feat: database schema
+feat: authentication
+feat: household management
+feat: chore module
+feat: expense split module
+feat: dashboard
+feat: admin controls
+fix: validation and authorization
+chore: deploy configuration
+release: 24-oct-demo
+24. Source Notes and Official Project Constraints
+Institutional constraints in this plan are based on the project brief and departmental files supplied by the team. The brief states the institution, course, BCA-508 subject code, mandatory body sections, deployment requirement and development dates. The supplied progress-plan PDF explicitly lists 7-23 October 2026 as Coding & Development and 24 October 2026 as the first presentation/review, with a note that every project must be deployed and working when the coordinator opens the link.
+Institutional source references
+BCA-508 Master Brief & Context supplied for this project - used for academic context, mandatory 11-section structure, required diagrams, hardware/software requirements and submission workflow.
+Minor Project Progress Plan - used for the official development window and 24 October deployment/live-review requirement.
+Synopsis Panel List - used for panel/section mapping information.
+Current hosting references checked 7 October 2026
+GitHub Pricing: https://github.com/pricing
+GitHub About Repositories: https://docs.github.com/en/repositories/creating-and-managing-repositories/about-repositories
+Vercel Terms / Hobby Plan: https://vercel.com/legal/terms
+Render Free Services: https://render.com/docs/free
+Render First Deploy: https://render.com/docs/your-first-deploy
+Supabase Pricing: https://supabase.com/pricing
+Important  Provider free tiers and terms can change. This plan therefore treats free hosting as an implementation assumption and avoids making the project dependent on paid-only services.
+25. One-Page Team Summary
+THE BUILD  React + Tailwind frontend | Express API | Supabase Auth + PostgreSQL | GitHub | Vercel + Render
+THE MVP  Login -> Household -> Chores -> Expenses -> Split -> Contribution/Balance -> Dashboard -> Admin
+THE DATA  Synthetic demo data only. No data-collection campaign.
+THE RULE  AI writes code; the team controls architecture, tests, deployment and understanding.
+THE DEADLINE  Code 7-23 Oct 2026; live review 24 Oct; final presentation/file 31 Oct.
+THE VIVA  Know architecture, database relationships, authentication/authorization, expense calculation, dashboard flow and deployment.
+THE SUCCESS CONDITION  Live URL opens, core transaction works, documentation matches implementation, and every teammate can explain the system.

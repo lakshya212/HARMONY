@@ -1,0 +1,13 @@
+{
+  "name": "harmony-root",
+  "version": "1.0.0",
+  "description": "HARMONY: Roommate Conflict Resolution & Shared Living Management System (BCA-508 Minor Project)",
+  "scripts": {
+    "dev:backend": "npm --prefix backend run dev",
+    "dev:frontend": "npm --prefix frontend run dev",
+    "build:frontend": "npm --prefix frontend run build",
+    "start:backend": "npm --prefix backend start"
+  },
+  "author": "Lakshya Sharma (BCA 5th Sem, IMS Noida)",
+  "license": "MIT"
+}
