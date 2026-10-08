@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { Shield, Users, Copy, Check, Key, AlertCircle, History } from 'lucide-react';
+import { ShieldCheck, Users, Copy, Check, Key, AlertCircle, Trash2 } from 'lucide-react';
 
 export default function AdminPage() {
   const { household, currentUser, demoUsers, switchUser } = useApp();
@@ -18,27 +18,27 @@ export default function AdminPage() {
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
       
       {/* Header */}
-      <div className="flex justify-between items-center">
-        <div>
-          <h1 className="text-2xl font-bold text-slate-900">Admin Governance & Settings</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Household configuration, invite code management, and membership controls.
-          </p>
-        </div>
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-display">
+          Flat Settings & Governance
+        </h1>
+        <p className="text-sm text-slate-400 mt-1">
+          Manage flatmates, invite codes, and group permissions.
+        </p>
       </div>
 
       {/* Role Notice */}
       {!isAdmin && (
-        <div className="p-4 rounded-xl bg-amber-50 border border-amber-200 text-amber-800 text-xs flex items-center justify-between">
+        <div className="p-4 rounded-2xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-xs flex items-center justify-between">
           <div className="flex items-center space-x-2">
-            <AlertCircle className="w-4 h-4 text-amber-600" />
+            <AlertCircle className="w-4 h-4 text-amber-400" />
             <span>
-              You are currently viewing as <b>{currentUser.name}</b> (Role: Member). Elevated actions are restricted to Admin.
+              You are currently viewing as <strong>{currentUser.name}</strong> (Member). Admin controls belong to Lakshya.
             </span>
           </div>
           <button
             onClick={() => switchUser('u1')}
-            className="px-2.5 py-1 bg-amber-600 hover:bg-amber-700 text-white rounded font-semibold text-[11px]"
+            className="px-3 py-1 bg-amber-500 hover:bg-amber-600 text-slate-900 rounded-lg font-bold text-xs"
           >
             Switch to Lakshya (Admin)
           </button>
@@ -46,98 +46,103 @@ export default function AdminPage() {
       )}
 
       {/* Household Profile & Invite Code Box */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <h3 className="font-bold text-slate-900 text-lg flex items-center space-x-2">
-          <Key className="w-5 h-5 text-blue-600" />
-          <span>Household Credentials</span>
+      <div className="bg-[#11182B] p-6 sm:p-8 rounded-3xl border border-white/5 space-y-6">
+        <h3 className="font-bold text-white text-lg flex items-center space-x-2">
+          <Key className="w-5 h-5 text-indigo-400" />
+          <span>Flat Access & Credentials</span>
         </h3>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-100">
-            <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">
-              Household Name
+          <div className="p-5 rounded-2xl bg-[#0D1322] border border-white/5">
+            <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+              Flat / House Name
             </label>
-            <p className="font-bold text-slate-800 text-base">{household.name}</p>
+            <p className="font-bold text-white text-base">{household.name}</p>
+            <p className="text-xs text-slate-400 mt-1">Created by Lakshya Sharma</p>
           </div>
 
-          <div className="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-between">
+          <div className="p-5 rounded-2xl bg-[#0D1322] border border-white/5 flex items-center justify-between">
             <div>
-              <label className="text-xs font-semibold text-slate-500 uppercase tracking-wider block mb-1">
-                Roommate Invite Token
+              <label className="text-[10px] font-bold text-slate-400 uppercase tracking-wider block mb-1">
+                Roommate Invite Code
               </label>
-              <p className="font-mono font-extrabold text-blue-700 text-xl tracking-wider">
-                {household.invite_code}
-              </p>
+              <p className="font-mono font-extrabold text-2xl text-emerald-400">{household.invite_code}</p>
+              <p className="text-xs text-slate-400 mt-1">Share this code with your flatmates</p>
             </div>
+            
             <button
               onClick={copyInvite}
-              className="px-3 py-2 bg-blue-50 text-blue-600 hover:bg-blue-100 rounded-lg text-xs font-semibold flex items-center space-x-1 transition"
+              className="flex items-center space-x-1.5 px-4 py-2.5 rounded-xl bg-white/5 hover:bg-white/10 text-slate-200 text-xs font-bold border border-white/10 transition"
             >
-              {copied ? <Check className="w-4 h-4" /> : <Copy className="w-4 h-4" />}
+              {copied ? <Check className="w-4 h-4 text-emerald-400" /> : <Copy className="w-4 h-4" />}
               <span>{copied ? 'Copied!' : 'Copy Code'}</span>
             </button>
           </div>
         </div>
       </div>
 
-      {/* Member Roster */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <h3 className="font-bold text-slate-900 text-lg flex items-center space-x-2">
-          <Users className="w-5 h-5 text-indigo-600" />
-          <span>Household Roommate Roster (4 Members)</span>
-        </h3>
-
-        <div className="divide-y divide-slate-100">
-          {demoUsers.map((user) => (
-            <div key={user.id} className="py-3 flex items-center justify-between">
-              <div>
-                <p className="font-semibold text-sm text-slate-900">{user.name}</p>
-                <p className="text-xs text-slate-400">{user.email}</p>
-              </div>
-              <div className="flex items-center space-x-3">
-                <span className={`px-2.5 py-0.5 rounded-full text-xs font-semibold ${
-                  user.role === 'admin'
-                    ? 'bg-purple-100 text-purple-800'
-                    : 'bg-slate-100 text-slate-600'
-                }`}>
-                  {user.role.toUpperCase()}
-                </span>
-                {isAdmin && user.role !== 'admin' && (
-                  <button
-                    disabled
-                    className="text-xs text-slate-400 hover:text-rose-600 px-2 py-1 rounded transition"
-                    title="Administrative action"
-                  >
-                    Manage
-                  </button>
-                )}
-              </div>
-            </div>
-          ))}
+      {/* Roommates Roster Table */}
+      <div className="bg-[#11182B] p-6 sm:p-8 rounded-3xl border border-white/5 space-y-6">
+        <div className="flex justify-between items-center">
+          <div>
+            <h3 className="font-bold text-white text-lg flex items-center space-x-2">
+              <Users className="w-5 h-5 text-indigo-400" />
+              <span>Flatmate Roster (4 Members)</span>
+            </h3>
+            <p className="text-xs text-slate-400 mt-1">Active flatmates sharing expenses and duties</p>
+          </div>
         </div>
-      </div>
 
-      {/* Audit Log (Viva Requirement for Administrative Accountability) */}
-      <div className="bg-white p-6 rounded-2xl border border-slate-200 shadow-sm space-y-4">
-        <h3 className="font-bold text-slate-900 text-lg flex items-center space-x-2">
-          <History className="w-5 h-5 text-emerald-600" />
-          <span>Security & Activity Audit Log</span>
-        </h3>
-        
-        <div className="space-y-2 text-xs">
-          {[
-            { id: 1, action: 'Household Space Registered', target: 'Green Residency (Flat 402)', time: '2026-10-01 10:00' },
-            { id: 2, action: 'Member Joined via Token', target: 'Rahul Verma using GRN101', time: '2026-10-02 14:22' },
-            { id: 3, action: 'Member Joined via Token', target: 'Aman Gupta using GRN101', time: '2026-10-02 15:05' },
-            { id: 4, action: 'Member Joined via Token', target: 'Rohit Kumar using GRN101', time: '2026-10-03 11:30' },
-            { id: 5, action: 'Master Bill Created', target: '₹2,400 Electricity Bill (4 Splits)', time: '2026-10-03 18:40' },
-            { id: 6, action: 'Chore Completed', target: 'Deep Clean Kitchen (25 pts)', time: '2026-10-05 20:15' }
-          ].map((log) => (
-            <div key={log.id} className="p-2.5 rounded-lg bg-slate-50 border border-slate-100 flex justify-between items-center text-slate-600">
-              <span><b>{log.action}:</b> {log.target}</span>
-              <span className="text-slate-400 font-mono text-[11px]">{log.time}</span>
-            </div>
-          ))}
+        <div className="overflow-x-auto">
+          <table className="w-full text-left text-sm text-slate-300">
+            <thead>
+              <tr className="border-b border-white/5 text-[10px] font-bold text-slate-400 uppercase tracking-wider">
+                <th className="pb-3">Roommate</th>
+                <th className="pb-3">Email Address</th>
+                <th className="pb-3">Role</th>
+                <th className="pb-3">Status</th>
+                <th className="pb-3 text-right">Actions</th>
+              </tr>
+            </thead>
+            <tbody className="divide-y divide-white/5">
+              {demoUsers.map((user) => (
+                <tr key={user.id} className="hover:bg-white/5 transition">
+                  <td className="py-4 font-bold text-white flex items-center space-x-3">
+                    <div className={`w-8 h-8 rounded-lg bg-gradient-to-tr ${user.avatarColor} flex items-center justify-center text-white text-xs font-bold`}>
+                      {user.initials}
+                    </div>
+                    <span>{user.name}</span>
+                  </td>
+                  <td className="py-4 text-slate-400 font-mono text-xs">{user.email}</td>
+                  <td className="py-4">
+                    <span className={`px-2.5 py-0.5 rounded-full text-[10px] font-bold ${
+                      user.role === 'admin'
+                        ? 'bg-indigo-500/10 text-indigo-400 border border-indigo-500/20'
+                        : 'bg-white/5 text-slate-400'
+                    }`}>
+                      {user.role === 'admin' ? 'Flat Manager' : 'Flatmate'}
+                    </span>
+                  </td>
+                  <td className="py-4">
+                    <span className="inline-flex items-center text-xs text-emerald-400 font-bold">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 mr-1.5"></span>
+                      Active
+                    </span>
+                  </td>
+                  <td className="py-4 text-right">
+                    {user.role !== 'admin' && (
+                      <button
+                        disabled={!isAdmin}
+                        className="text-xs text-rose-400 hover:text-rose-300 font-bold disabled:opacity-30 disabled:cursor-not-allowed"
+                      >
+                        Remove
+                      </button>
+                    )}
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
       </div>
 

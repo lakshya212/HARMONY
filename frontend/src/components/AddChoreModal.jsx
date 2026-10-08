@@ -1,13 +1,12 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { X, CheckSquare, Sparkles } from 'lucide-react';
+import { X, CheckCircle2 } from 'lucide-react';
 
 export default function AddChoreModal({ isOpen, onClose }) {
-  const { addTask, demoUsers } = useApp();
+  const { addTask, demoUsers, currentUser } = useApp();
   const [title, setTitle] = useState('');
-  const [category, setCategory] = useState('Kitchen');
-  const [points, setPoints] = useState(20);
-  const [assignedTo, setAssignedTo] = useState('u1');
+  const [category, setCategory] = useState('Cleaning');
+  const [assignedTo, setAssignedTo] = useState(currentUser.id);
   const [dueDate, setDueDate] = useState(new Date().toISOString().split('T')[0]);
   const [submitting, setSubmitting] = useState(false);
 
@@ -20,7 +19,7 @@ export default function AddChoreModal({ isOpen, onClose }) {
     await addTask({
       title,
       category,
-      points: Number(points),
+      points: 20,
       assigned_to: assignedTo,
       due_date: dueDate
     });
@@ -30,112 +29,99 @@ export default function AddChoreModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-slate-100">
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center">
-              <CheckSquare className="w-5 h-5" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in">
+      <div className="bg-[#0D1322] rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 border-b border-white/5">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-indigo-500/20 text-indigo-400 flex items-center justify-center">
+              <CheckCircle2 className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-slate-900 text-lg">Add New Chore</h3>
+            <h3 className="font-bold text-white text-base font-display">Add House Duty</h3>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+          <button onClick={onClose} className="text-slate-400 hover:text-white transition">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-              Chore Title
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+              Task Description
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. Wipe Kitchen Stove & Sanitise"
               value={title}
               onChange={(e) => setTitle(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
+              placeholder="e.g. Clean kitchen sink, buy RO water"
+              className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
             />
           </div>
 
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                 Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
+                className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
               >
-                <option value="Kitchen">Kitchen</option>
-                <option value="Cleaning">Cleaning</option>
-                <option value="Groceries">Groceries</option>
-                <option value="Maintenance">Maintenance</option>
+                <option value="Cleaning">🧹 Cleaning</option>
+                <option value="Kitchen">🍳 Kitchen</option>
+                <option value="Groceries">🛒 Groceries</option>
+                <option value="Maintenance">🛠️ Maintenance</option>
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                Points (Effort)
-              </label>
-              <select
-                value={points}
-                onChange={(e) => setPoints(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
-              >
-                <option value="10">10 pts (Light)</option>
-                <option value="15">15 pts (Standard)</option>
-                <option value="20">20 pts (Moderate)</option>
-                <option value="25">25 pts (Heavy)</option>
-                <option value="35">35 pts (Deep Clean)</option>
-              </select>
-            </div>
-          </div>
-
-          <div className="grid grid-cols-2 gap-3">
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
-                Assignee
-              </label>
-              <select
-                value={assignedTo}
-                onChange={(e) => setAssignedTo(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm bg-white"
-              >
-                {demoUsers.map((u) => (
-                  <option key={u.id} value={u.id}>
-                    {u.name}
-                  </option>
-                ))}
-              </select>
-            </div>
-
-            <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                 Due Date
               </label>
               <input
                 type="date"
+                required
                 value={dueDate}
                 onChange={(e) => setDueDate(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-blue-500 text-sm"
-              />
+                className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+              >
+              </input>
             </div>
+          </div>
+
+          <div>
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
+              Assign to Flatmate
+            </label>
+            <select
+              value={assignedTo}
+              onChange={(e) => setAssignedTo(e.target.value)}
+              className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500"
+            >
+              {demoUsers.map((u) => (
+                <option key={u.id} value={u.id}>
+                  {u.name} {u.id === currentUser.id ? '(You)' : ''}
+                </option>
+              ))}
+            </select>
           </div>
 
           <div className="pt-2">
             <button
               type="submit"
               disabled={submitting}
-              className="w-full py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-medium rounded-lg shadow-sm transition flex items-center justify-center space-x-2 text-sm disabled:opacity-50"
+              className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-sm shadow-lg shadow-indigo-500/20 transition disabled:opacity-50"
             >
-              <Sparkles className="w-4 h-4" />
-              <span>{submitting ? 'Creating Chore...' : 'Save & Publish Chore'}</span>
+              {submitting ? 'Adding...' : 'Add House Chore'}
             </button>
           </div>
+
         </form>
+
       </div>
     </div>
   );

@@ -1,118 +1,163 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { CheckSquare, Plus, Trash2, Calendar, Award, CheckCircle, Clock } from 'lucide-react';
+import {
+  CheckCircle2,
+  Plus,
+  Trash2,
+  Calendar,
+  Check,
+  Clock,
+  Sparkles,
+  Filter
+} from 'lucide-react';
 import AddChoreModal from '../components/AddChoreModal';
 
 export default function TasksPage() {
-  const { tasks, toggleTask, deleteTask, currentUser } = useApp();
-  const [filter, setFilter] = useState('ALL');
+  const { tasks, currentUser, household, toggleTask, deleteTask } = useApp();
   const [modalOpen, setModalOpen] = useState(false);
+  const [filter, setFilter] = useState('ALL'); // 'ALL', 'PENDING', 'COMPLETED', 'MY'
 
   const filteredTasks = tasks.filter((t) => {
     if (filter === 'PENDING') return t.status === 'PENDING';
     if (filter === 'COMPLETED') return t.status === 'COMPLETED';
+    if (filter === 'MY') return t.assigned_to === currentUser.id;
     return true;
   });
 
+  const completedCount = tasks.filter(t => t.status === 'COMPLETED').length;
+  const pendingCount = tasks.filter(t => t.status === 'PENDING').length;
+  const progressPercent = Math.round((completedCount / (tasks.length || 1)) * 100);
+
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-6">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
       
-      {/* Header & Actions */}
-      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      {/* Top Banner */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 bg-[#11182B] p-6 sm:p-8 rounded-3xl border border-white/10 shadow-2xl">
         <div>
-          <h1 className="text-2xl font-bold text-slate-900">Household Chores</h1>
-          <p className="text-sm text-slate-500 mt-1">
-            Complete tasks to earn verified contribution points and prevent free-rider imbalance.
+          <h1 className="text-2xl sm:text-3xl font-extrabold text-white tracking-tight font-display">
+            House Duties & Chores
+          </h1>
+          <p className="mt-1 text-sm text-slate-400">
+            Keep the living space clean without arguments. Tap any chore to mark it completed.
           </p>
         </div>
 
         <button
           onClick={() => setModalOpen(true)}
-          className="px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-sm font-semibold rounded-xl shadow-sm transition flex items-center space-x-2"
+          className="flex items-center space-x-2 px-6 py-3.5 rounded-2xl bg-gradient-to-r from-indigo-500 to-purple-600 hover:from-indigo-600 hover:to-purple-700 text-white font-bold text-sm shadow-lg shadow-indigo-500/20 transition-all transform hover:-translate-y-0.5"
         >
           <Plus className="w-4 h-4" />
-          <span>New Chore</span>
+          <span>Add New Chore</span>
         </button>
       </div>
 
+      {/* Progress & Stat Cards */}
+      <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+        <div className="bg-[#11182B] p-5 rounded-2xl border border-white/5 sm:col-span-2 flex flex-col justify-between">
+          <div className="flex justify-between items-center mb-3">
+            <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Weekly House Duty Progress</span>
+            <span className="text-sm font-extrabold text-emerald-400">{progressPercent}% Done</span>
+          </div>
+          {/* Progress Bar */}
+          <div className="w-full h-3 bg-[#0D1322] rounded-full overflow-hidden p-0.5 border border-white/5">
+            <div
+              className="h-full bg-gradient-to-r from-indigo-500 via-purple-500 to-emerald-400 rounded-full transition-all duration-500"
+              style={{ width: `${progressPercent}%` }}
+            ></div>
+          </div>
+          <p className="text-xs text-slate-400 mt-3">
+            {completedCount} chores done · {pendingCount} remaining for this week
+          </p>
+        </div>
+
+        <div className="bg-[#11182B] p-5 rounded-2xl border border-white/5 flex flex-col justify-between">
+          <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Active Flatmate</span>
+          <p className="text-xl font-bold text-white mt-1">{currentUser.name}</p>
+          <p className="text-xs text-indigo-300 font-semibold mt-1">
+            {tasks.filter(t => t.assigned_to === currentUser.id && t.status === 'PENDING').length} pending assigned to you
+          </p>
+        </div>
+      </div>
+
       {/* Filter Tabs */}
-      <div className="flex space-x-2 border-b border-slate-200 pb-2">
-        {['ALL', 'PENDING', 'COMPLETED'].map((f) => (
+      <div className="flex flex-wrap gap-2 pt-2">
+        {[
+          { id: 'ALL', label: `All Tasks (${tasks.length})` },
+          { id: 'PENDING', label: `Pending (${pendingCount})` },
+          { id: 'COMPLETED', label: `Completed (${completedCount})` },
+          { id: 'MY', label: 'Assigned to Me' },
+        ].map((tab) => (
           <button
-            key={f}
-            onClick={() => setFilter(f)}
-            className={`px-3 py-1.5 text-xs font-semibold rounded-lg transition ${
-              filter === f
-                ? 'bg-blue-600 text-white'
-                : 'text-slate-600 hover:bg-slate-100'
+            key={tab.id}
+            onClick={() => setFilter(tab.id)}
+            className={`px-4 py-2 rounded-xl text-xs font-bold transition ${
+              filter === tab.id
+                ? 'bg-gradient-to-r from-indigo-500 to-purple-600 text-white shadow-md'
+                : 'bg-[#11182B] text-slate-400 hover:text-white border border-white/5 hover:bg-white/5'
             }`}
           >
-            {f === 'ALL' ? 'All Chores' : f.charAt(0) + f.slice(1).toLowerCase()}
+            {tab.label}
           </button>
         ))}
       </div>
 
-      {/* Task List Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+      {/* Tasks Checklist */}
+      <div className="space-y-3">
         {filteredTasks.map((task) => {
           const isDone = task.status === 'COMPLETED';
+
           return (
             <div
               key={task.id}
-              className={`p-5 rounded-2xl border transition-all ${
+              className={`p-5 rounded-2xl border transition-all flex items-center justify-between gap-4 ${
                 isDone
-                  ? 'bg-slate-50/80 border-slate-200 opacity-80'
-                  : 'bg-white border-slate-200 shadow-sm hover:shadow-md'
+                  ? 'bg-emerald-500/5 border-emerald-500/20 opacity-80'
+                  : 'bg-[#11182B] border-white/5 hover:border-white/10'
               }`}
             >
-              <div className="flex justify-between items-start mb-2">
-                <span className="text-[11px] font-bold uppercase tracking-wider px-2 py-0.5 rounded bg-slate-100 text-slate-600">
-                  {task.category}
-                </span>
-                <span className="inline-flex items-center text-xs font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
-                  <Award className="w-3.5 h-3.5 mr-1" />
-                  {task.points} pts
-                </span>
-              </div>
-
-              <h3 className={`font-semibold text-base mb-2 ${isDone ? 'line-through text-slate-400' : 'text-slate-900'}`}>
-                {task.title}
-              </h3>
-
-              <div className="text-xs text-slate-500 space-y-1 mb-4">
-                <p className="flex items-center">
-                  <Calendar className="w-3.5 h-3.5 mr-1.5 text-slate-400" />
-                  Due: {task.due_date || 'No deadline'}
-                </p>
-                <p>
-                  Assigned to: <span className="font-medium text-slate-700">{task.assigned_name}</span>
-                </p>
-                {isDone && task.completed_name && (
-                  <p className="text-emerald-600 font-medium flex items-center">
-                    <CheckCircle className="w-3.5 h-3.5 mr-1 text-emerald-500" />
-                    Completed by {task.completed_name}
-                  </p>
-                )}
-              </div>
-
-              {/* Action Buttons */}
-              <div className="flex items-center justify-between pt-3 border-t border-slate-100">
-                <button
-                  onClick={() => toggleTask(task.id)}
-                  className={`px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center space-x-1.5 transition ${
+              <div
+                onClick={() => toggleTask(task.id)}
+                className="flex items-center space-x-4 cursor-pointer flex-1"
+              >
+                <div
+                  className={`w-7 h-7 rounded-xl flex items-center justify-center border transition-all ${
                     isDone
-                      ? 'bg-amber-50 text-amber-700 hover:bg-amber-100'
-                      : 'bg-emerald-600 text-white hover:bg-emerald-700'
+                      ? 'bg-emerald-500 border-emerald-400 text-white shadow-md shadow-emerald-500/20'
+                      : 'border-white/20 bg-white/5 text-transparent hover:border-indigo-400'
                   }`}
                 >
-                  <CheckSquare className="w-3.5 h-3.5" />
-                  <span>{isDone ? 'Mark as Incomplete' : 'Mark Done'}</span>
-                </button>
+                  <Check className="w-4 h-4" />
+                </div>
+
+                <div>
+                  <h3 className={`text-sm sm:text-base font-bold ${isDone ? 'line-through text-slate-400' : 'text-white'}`}>
+                    {task.title}
+                  </h3>
+                  <div className="flex flex-wrap items-center gap-2 mt-1 text-xs text-slate-400">
+                    <span>Assigned to <strong className="text-slate-300">{task.assigned_to_name || 'Roommate'}</strong></span>
+                    <span>·</span>
+                    <span>Due {task.due_date}</span>
+                    <span>·</span>
+                    <span className="px-2 py-0.5 rounded-md bg-white/5 text-slate-300 border border-white/5">
+                      {task.category}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-3">
+                <span className={`px-2.5 py-1 rounded-full text-xs font-bold ${
+                  isDone
+                    ? 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
+                    : 'bg-amber-500/10 text-amber-400 border border-amber-500/20'
+                }`}>
+                  {isDone ? 'Completed' : 'Pending'}
+                </span>
 
                 <button
                   onClick={() => deleteTask(task.id)}
-                  title="Delete task"
-                  className="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition"
+                  title="Delete chore"
+                  className="p-2 rounded-xl bg-white/5 hover:bg-rose-500/10 text-slate-500 hover:text-rose-400 transition"
                 >
                   <Trash2 className="w-4 h-4" />
                 </button>
@@ -122,7 +167,7 @@ export default function TasksPage() {
         })}
       </div>
 
-      <AddChoreModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />
+      {modalOpen && <AddChoreModal isOpen={modalOpen} onClose={() => setModalOpen(false)} />}
     </div>
   );
 }

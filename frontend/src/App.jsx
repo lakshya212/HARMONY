@@ -12,7 +12,7 @@ import AdminPage from './pages/AdminPage';
 
 function AppLayout({ children }) {
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col justify-between">
+    <div className="min-h-screen bg-[#070A12] text-slate-100 flex flex-col justify-between selection:bg-indigo-500 selection:text-white">
       <Navbar />
       <main className="flex-1">
         {children}
@@ -25,12 +25,12 @@ function AppLayout({ children }) {
 export default function App() {
   return (
     <Routes>
-      {/* Public Pages */}
+      {/* Public Startup Landing & Auth */}
       <Route path="/" element={<LandingPage />} />
       <Route path="/login" element={<LoginPage />} />
       <Route path="/register" element={<RegisterPage />} />
 
-      {/* Main Household App Pages (with Shared Navbar & Footer) */}
+      {/* Main Household App Pages (Shared AppLayout) */}
       <Route
         path="/dashboard"
         element={
@@ -65,7 +65,7 @@ export default function App() {
       />
 
       {/* Catch-all Fallback */}
-      <Route path="*" element={<Navigate to="/" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }

@@ -13,10 +13,10 @@ DELETE FROM profiles;
 
 -- 1. Insert 4 Demo Roommate Profiles
 INSERT INTO profiles (id, email, full_name, role) VALUES
-('a0000000-0000-0000-0000-000000000001', 'lakshya@imsnoida.com', 'Lakshya Sharma', 'admin'),
-('a0000000-0000-0000-0000-000000000002', 'rahul@imsnoida.com', 'Rahul Verma', 'member'),
-('a0000000-0000-0000-0000-000000000003', 'aman@imsnoida.com', 'Aman Gupta', 'member'),
-('a0000000-0000-0000-0000-000000000004', 'rohit@imsnoida.com', 'Rohit Kumar', 'member');
+('a0000000-0000-0000-0000-000000000001', 'lakshya@harmony.app', 'Lakshya Sharma', 'admin'),
+('a0000000-0000-0000-0000-000000000002', 'rahul@harmony.app', 'Rahul Verma', 'member'),
+('a0000000-0000-0000-0000-000000000003', 'aman@harmony.app', 'Aman Gupta', 'member'),
+('a0000000-0000-0000-0000-000000000004', 'rohit@harmony.app', 'Rohit Kumar', 'member');
 
 -- 2. Insert 1 Demo Household (Green Residency, Invite Code: GRN101)
 INSERT INTO households (id, name, invite_code, created_by) VALUES

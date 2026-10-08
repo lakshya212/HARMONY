@@ -4,12 +4,12 @@ const AppContext = createContext();
 
 const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL.replace(/\/$/, '')}/api` : '/api';
 
-// Initial synthetic seed data for instant 0ms rendering and offline presentation safety
+// Initial clean demo flatmates for instant 0ms rendering and zero-friction evaluation
 const INITIAL_USERS = [
-  { id: 'u1', name: 'Lakshya Sharma', email: 'lakshya@imsnoida.com', role: 'admin' },
-  { id: 'u2', name: 'Rahul Verma', email: 'rahul@imsnoida.com', role: 'member' },
-  { id: 'u3', name: 'Aman Gupta', email: 'aman@imsnoida.com', role: 'member' },
-  { id: 'u4', name: 'Rohit Kumar', email: 'rohit@imsnoida.com', role: 'member' }
+  { id: 'u1', name: 'Lakshya Sharma', email: 'lakshya@harmony.app', role: 'admin', avatarColor: 'from-indigo-500 to-purple-600', initials: 'LS' },
+  { id: 'u2', name: 'Rahul Verma', email: 'rahul@harmony.app', role: 'member', avatarColor: 'from-emerald-500 to-teal-600', initials: 'RV' },
+  { id: 'u3', name: 'Aman Gupta', email: 'aman@harmony.app', role: 'member', avatarColor: 'from-amber-500 to-orange-600', initials: 'AG' },
+  { id: 'u4', name: 'Rohit Kumar', email: 'rohit@harmony.app', role: 'member', avatarColor: 'from-rose-500 to-pink-600', initials: 'RK' }
 ];
 
 const INITIAL_HOUSEHOLD = {
@@ -19,26 +19,26 @@ const INITIAL_HOUSEHOLD = {
 };
 
 const INITIAL_TASKS = [
-  { id: 't1', household_id: 'h1', title: 'Deep Clean Kitchen Counters', category: 'Kitchen', points: 25, assigned_to: 'u1', assigned_to_name: 'Lakshya', completed_by: 'u1', status: 'COMPLETED', due_date: '2026-10-05' },
-  { id: 't2', household_id: 'h1', title: 'Living Room Vacuuming & Mopping', category: 'Cleaning', points: 30, assigned_to: 'u2', assigned_to_name: 'Rahul', completed_by: 'u2', status: 'COMPLETED', due_date: '2026-10-06' },
-  { id: 't3', household_id: 'h1', title: 'Weekly Grocery Supply Run', category: 'Groceries', points: 20, assigned_to: 'u3', assigned_to_name: 'Aman', completed_by: 'u3', status: 'COMPLETED', due_date: '2026-10-06' },
-  { id: 't4', household_id: 'h1', title: 'Dispose Garbage & Segregate Waste', category: 'Cleaning', points: 15, assigned_to: 'u4', assigned_to_name: 'Rohit', completed_by: 'u4', status: 'COMPLETED', due_date: '2026-10-07' },
-  { id: 't5', household_id: 'h1', title: 'Bathroom Sanitisation (Common)', category: 'Cleaning', points: 35, assigned_to: 'u1', assigned_to_name: 'Lakshya', completed_by: 'u1', status: 'COMPLETED', due_date: '2026-10-07' },
-  { id: 't6', household_id: 'h1', title: 'Refill Drinking Water Dispensers', category: 'Maintenance', points: 20, assigned_to: 'u2', assigned_to_name: 'Rahul', completed_by: 'u2', status: 'COMPLETED', due_date: '2026-10-08' },
-  { id: 't7', household_id: 'h1', title: 'Wash Cooking Vessels & Utensils', category: 'Kitchen', points: 20, assigned_to: 'u3', assigned_to_name: 'Aman', completed_by: 'u3', status: 'COMPLETED', due_date: '2026-10-08' },
-  { id: 't8', household_id: 'h1', title: 'Clean Refrigerator Shelves', category: 'Kitchen', points: 25, assigned_to: 'u4', assigned_to_name: 'Rohit', completed_by: 'u4', status: 'COMPLETED', due_date: '2026-10-08' },
-  { id: 't9', household_id: 'h1', title: 'Restock Toiletries & Detergent', category: 'Groceries', points: 15, assigned_to: 'u1', assigned_to_name: 'Lakshya', completed_by: null, status: 'PENDING', due_date: '2026-10-10' },
-  { id: 't10', household_id: 'h1', title: 'Balcony Sweep & Plant Watering', category: 'Cleaning', points: 15, assigned_to: 'u2', assigned_to_name: 'Rahul', completed_by: null, status: 'PENDING', due_date: '2026-10-11' },
-  { id: 't11', household_id: 'h1', title: 'AC Filter Cleaning', category: 'Maintenance', points: 30, assigned_to: 'u3', assigned_to_name: 'Aman', completed_by: null, status: 'PENDING', due_date: '2026-10-12' },
-  { id: 't12', household_id: 'h1', title: 'Sort Monthly Newspaper & Cardboard', category: 'Maintenance', points: 20, assigned_to: 'u4', assigned_to_name: 'Rohit', completed_by: null, status: 'PENDING', due_date: '2026-10-13' }
+  { id: 't1', household_id: 'h1', title: 'Deep Clean Kitchen & Counters', category: 'Kitchen', points: 25, assigned_to: 'u1', assigned_to_name: 'Lakshya', completed_by: 'u1', status: 'COMPLETED', due_date: '2026-10-05' },
+  { id: 't2', household_id: 'h1', title: 'Living Room Vacuum & Mopping', category: 'Cleaning', points: 30, assigned_to: 'u2', assigned_to_name: 'Rahul', completed_by: 'u2', status: 'COMPLETED', due_date: '2026-10-06' },
+  { id: 't3', household_id: 'h1', title: 'Weekly Blinkit Superstore Grocery Run', category: 'Groceries', points: 20, assigned_to: 'u3', assigned_to_name: 'Aman', completed_by: 'u3', status: 'COMPLETED', due_date: '2026-10-06' },
+  { id: 't4', household_id: 'h1', title: 'Dispose Waste & Replace Bin Liners', category: 'Cleaning', points: 15, assigned_to: 'u4', assigned_to_name: 'Rohit', completed_by: 'u4', status: 'COMPLETED', due_date: '2026-10-07' },
+  { id: 't5', household_id: 'h1', title: 'Common Bathroom Sanitisation', category: 'Cleaning', points: 35, assigned_to: 'u1', assigned_to_name: 'Lakshya', completed_by: 'u1', status: 'COMPLETED', due_date: '2026-10-07' },
+  { id: 't6', household_id: 'h1', title: 'Refill 20L Drinking Water Dispensers', category: 'Maintenance', points: 20, assigned_to: 'u2', assigned_to_name: 'Rahul', completed_by: 'u2', status: 'COMPLETED', due_date: '2026-10-08' },
+  { id: 't7', household_id: 'h1', title: 'Wash Cooking Vessels & Dinner Utensils', category: 'Kitchen', points: 20, assigned_to: 'u3', assigned_to_name: 'Aman', completed_by: 'u3', status: 'COMPLETED', due_date: '2026-10-08' },
+  { id: 't8', household_id: 'h1', title: 'Clean Refrigerator & Expired Food', category: 'Kitchen', points: 25, assigned_to: 'u4', assigned_to_name: 'Rohit', completed_by: 'u4', status: 'COMPLETED', due_date: '2026-10-08' },
+  { id: 't9', household_id: 'h1', title: 'Restock Toiletries, Detergent & Handwash', category: 'Groceries', points: 15, assigned_to: 'u1', assigned_to_name: 'Lakshya', completed_by: null, status: 'PENDING', due_date: '2026-10-10' },
+  { id: 't10', household_id: 'h1', title: 'Balcony Sweep & Water Living Plants', category: 'Cleaning', points: 15, assigned_to: 'u2', assigned_to_name: 'Rahul', completed_by: null, status: 'PENDING', due_date: '2026-10-11' },
+  { id: 't11', household_id: 'h1', title: 'Clean AC Filters & Master Bedroom Vent', category: 'Maintenance', points: 30, assigned_to: 'u3', assigned_to_name: 'Aman', completed_by: null, status: 'PENDING', due_date: '2026-10-12' },
+  { id: 't12', household_id: 'h1', title: 'Flatten Delivery Cardboard & Newspaper', category: 'Maintenance', points: 20, assigned_to: 'u4', assigned_to_name: 'Rohit', completed_by: null, status: 'PENDING', due_date: '2026-10-13' }
 ];
 
 const INITIAL_EXPENSES = [
-  { id: 'e1', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Sharma', description: 'September Electricity Bill', amount: 2400.0, category: 'Utilities', expense_date: '2026-10-03', splits_count: 4 },
-  { id: 'e2', household_id: 'h1', paid_by: 'u2', paid_by_name: 'Rahul Verma', description: 'Airtel Xstream Fiber (300 Mbps)', amount: 1200.0, category: 'Internet', expense_date: '2026-10-04', splits_count: 4 },
-  { id: 'e3', household_id: 'h1', paid_by: 'u3', paid_by_name: 'Aman Gupta', description: 'Blinkit Superstore Bulk Ration', amount: 3600.0, category: 'Food', expense_date: '2026-10-05', splits_count: 4 },
-  { id: 'e4', household_id: 'h1', paid_by: 'u4', paid_by_name: 'Rohit Kumar', description: 'HP Gas Cylinder Refill', amount: 1100.0, category: 'Utilities', expense_date: '2026-10-06', splits_count: 4 },
-  { id: 'e5', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Sharma', description: 'Urban Company RO Service & Supplies', amount: 1500.0, category: 'Supplies', expense_date: '2026-10-07', splits_count: 4 }
+  { id: 'e1', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Sharma', description: 'September Electricity & Power Bill', amount: 2400.0, category: 'Utilities', expense_date: '2026-10-03', splits_count: 4 },
+  { id: 'e2', household_id: 'h1', paid_by: 'u2', paid_by_name: 'Rahul Verma', description: 'Airtel Xstream Fiber (300 Mbps Unlimited)', amount: 1200.0, category: 'Internet', expense_date: '2026-10-04', splits_count: 4 },
+  { id: 'e3', household_id: 'h1', paid_by: 'u3', paid_by_name: 'Aman Gupta', description: 'Blinkit Bulk Household Ration & Dairy', amount: 3600.0, category: 'Food', expense_date: '2026-10-05', splits_count: 4 },
+  { id: 'e4', household_id: 'h1', paid_by: 'u4', paid_by_name: 'Rohit Kumar', description: 'HP Gas Cooking Cylinder Refill', amount: 1100.0, category: 'Utilities', expense_date: '2026-10-06', splits_count: 4 },
+  { id: 'e5', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Sharma', description: 'Urban Company RO Service & Filter Replacement', amount: 1500.0, category: 'Supplies', expense_date: '2026-10-07', splits_count: 4 }
 ];
 
 const INITIAL_DASHBOARD = {
@@ -72,9 +72,10 @@ export const AppProvider = ({ children }) => {
   const [expenses, setExpenses] = useState(INITIAL_EXPENSES);
   const [dashboardData, setDashboardData] = useState(INITIAL_DASHBOARD);
   const [loading, setLoading] = useState(false);
+  const [isRefreshing, setIsRefreshing] = useState(false);
   const [apiConnected, setApiConnected] = useState(false);
 
-  // Recalculate local dashboard data if offline
+  // Recalculate local dashboard metrics instantly
   const computeLocalDashboard = (currentTasks, currentExpenses) => {
     const pendingChores = currentTasks.filter(t => t.status === 'PENDING').length;
     const completedChores = currentTasks.filter(t => t.status === 'COMPLETED').length;
@@ -114,9 +115,10 @@ export const AppProvider = ({ children }) => {
 
   // Fetch all state from live API with automatic fallback
   const refreshData = async () => {
+    setIsRefreshing(true);
     try {
       const controller = new AbortController();
-      const timeoutId = setTimeout(() => controller.abort(), 3500);
+      const timeoutId = setTimeout(() => controller.abort(), 2500);
 
       const [dashRes, tasksRes, expRes] = await Promise.all([
         fetch(`${API_BASE}/dashboard/${household.id}`, { signal: controller.signal }),
@@ -133,11 +135,11 @@ export const AppProvider = ({ children }) => {
         setTasks(t);
         setExpenses(e);
         setApiConnected(true);
-        return;
       }
     } catch (err) {
-      // Graceful offline mode - UI stays fully functional
       setApiConnected(false);
+    } finally {
+      setTimeout(() => setIsRefreshing(false), 400);
     }
   };
 
@@ -163,7 +165,6 @@ export const AppProvider = ({ children }) => {
       console.warn('API error, falling back to local state:', e);
     }
 
-    // Local fallback mutation
     const assignedUser = demoUsers.find(u => u.id === taskData.assigned_to) || currentUser;
     const newTask = {
       id: 't_' + Date.now(),
@@ -201,7 +202,6 @@ export const AppProvider = ({ children }) => {
       console.warn('API error, falling back to local toggle:', e);
     }
 
-    // Local fallback mutation
     const updated = tasks.map(t => {
       if (t.id === taskId) {
         const isDone = t.status === 'COMPLETED';
@@ -297,6 +297,25 @@ export const AppProvider = ({ children }) => {
     return true;
   };
 
+  // Instant Debt Settle-Up (Clear or log settlement payment)
+  const settleUp = (debtorName, amount) => {
+    const settlementExpense = {
+      id: 'e_settle_' + Date.now(),
+      household_id: household.id,
+      paid_by: currentUser.id,
+      paid_by_name: currentUser.name,
+      description: `Settled payment with ${debtorName}`,
+      amount: Number(amount) || 500,
+      category: 'Settlement',
+      expense_date: new Date().toISOString().split('T')[0],
+      splits_count: 2
+    };
+    const updated = [settlementExpense, ...expenses];
+    setExpenses(updated);
+    setDashboardData(computeLocalDashboard(tasks, updated));
+    return true;
+  };
+
   // Switch demo roommate (Lakshya / Rahul / Aman / Rohit)
   const switchUser = (userId) => {
     const found = demoUsers.find(u => u.id === userId);
@@ -313,6 +332,7 @@ export const AppProvider = ({ children }) => {
         expenses,
         dashboardData,
         loading,
+        isRefreshing,
         apiConnected,
         refreshData,
         addTask,
@@ -320,6 +340,7 @@ export const AppProvider = ({ children }) => {
         deleteTask,
         addExpense,
         deleteExpense,
+        settleUp,
         switchUser
       }}
     >

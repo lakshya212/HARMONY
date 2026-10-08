@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useApp } from '../context/AppContext';
-import { X, Receipt, Calculator } from 'lucide-react';
+import { X, Receipt, Calculator, Check } from 'lucide-react';
 
 export default function AddExpenseModal({ isOpen, onClose }) {
   const { addExpense, demoUsers, currentUser } = useApp();
@@ -44,38 +44,43 @@ export default function AddExpenseModal({ isOpen, onClose }) {
   };
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/50 backdrop-blur-sm p-4">
-      <div className="bg-white rounded-2xl shadow-xl w-full max-w-md overflow-hidden border border-slate-100">
-        <div className="flex justify-between items-center px-6 py-4 border-b border-slate-100">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center">
-              <Receipt className="w-5 h-5" />
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 backdrop-blur-md p-4 animate-in fade-in">
+      <div className="bg-[#0D1322] rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-white/10">
+        
+        {/* Header */}
+        <div className="flex justify-between items-center px-6 py-4 border-b border-white/5">
+          <div className="flex items-center space-x-2.5">
+            <div className="w-8 h-8 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center">
+              <Receipt className="w-4 h-4" />
             </div>
-            <h3 className="font-semibold text-slate-900 text-lg">Log Shared Expense</h3>
+            <h3 className="font-bold text-white text-base font-display">Add Shared Bill</h3>
           </div>
-          <button onClick={onClose} className="text-slate-400 hover:text-slate-600">
+          <button onClick={onClose} className="text-slate-400 hover:text-white transition">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
+          
+          {/* Bill Description */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
               Bill Description
             </label>
             <input
               type="text"
               required
-              placeholder="e.g. October Electricity Bill"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm"
+              placeholder="e.g. Wi-Fi Fiber Bill, Blinkit Groceries"
+              className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             />
           </div>
 
+          {/* Amount & Category */}
           <div className="grid grid-cols-2 gap-3">
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                 Total Amount (₹)
               </label>
               <input
@@ -83,99 +88,96 @@ export default function AddExpenseModal({ isOpen, onClose }) {
                 step="0.01"
                 min="1"
                 required
-                placeholder="2400.00"
                 value={amount}
                 onChange={(e) => setAmount(e.target.value)}
-                className="w-full px-3.5 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm font-semibold text-slate-800"
+                placeholder="1200"
+                className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white placeholder-slate-500 text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500 font-bold"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+              <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
                 Category
               </label>
               <select
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white"
+                className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
               >
-                <option value="Utilities">Utilities (Electricity/Gas)</option>
-                <option value="Internet">Internet / Wi-Fi</option>
-                <option value="Food">Food / Groceries</option>
-                <option value="Supplies">Supplies / Cleaning</option>
+                <option value="Utilities">⚡ Utilities</option>
+                <option value="Internet">📶 Internet</option>
+                <option value="Food">🛒 Food & Ration</option>
+                <option value="Supplies">🛠️ Supplies</option>
+                <option value="Other">🏷️ Other</option>
               </select>
             </div>
           </div>
 
+          {/* Paid By */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1">
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1">
               Who Paid Upfront?
             </label>
             <select
               value={paidBy}
               onChange={(e) => setPaidBy(e.target.value)}
-              className="w-full px-3 py-2.5 rounded-lg border border-slate-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 text-sm bg-white"
+              className="w-full px-4 py-3 bg-[#11182B] border border-white/10 rounded-xl text-white text-sm focus:outline-none focus:ring-2 focus:ring-emerald-500"
             >
               {demoUsers.map((u) => (
                 <option key={u.id} value={u.id}>
-                  {u.name} ({u.role})
+                  {u.name} {u.id === currentUser.id ? '(You)' : ''}
                 </option>
               ))}
             </select>
           </div>
 
-          {/* Participants Multi-Select */}
+          {/* Split Among Flatmates */}
           <div>
-            <label className="block text-xs font-semibold text-slate-700 uppercase tracking-wider mb-1.5">
-              Split Equitably Among ({participants.length} Roommates)
+            <label className="block text-xs font-bold text-slate-300 uppercase tracking-wider mb-1.5">
+              Split Equally Among ({participants.length} People)
             </label>
             <div className="grid grid-cols-2 gap-2">
               {demoUsers.map((u) => {
                 const isSelected = participants.includes(u.id);
                 return (
                   <button
-                    type="button"
                     key={u.id}
+                    type="button"
                     onClick={() => toggleParticipant(u.id)}
-                    className={`flex items-center px-3 py-2 rounded-lg border text-xs font-medium transition ${
+                    className={`p-2.5 rounded-xl border text-left text-xs font-bold transition flex items-center justify-between ${
                       isSelected
-                        ? 'border-emerald-500 bg-emerald-50 text-emerald-800'
-                        : 'border-slate-200 text-slate-400 bg-slate-50'
+                        ? 'bg-emerald-500/10 border-emerald-500/30 text-emerald-400'
+                        : 'bg-[#11182B] border-white/5 text-slate-500'
                     }`}
                   >
-                    <span className={`w-3.5 h-3.5 rounded-sm mr-2 flex items-center justify-center text-[10px] ${
-                      isSelected ? 'bg-emerald-600 text-white' : 'border border-slate-300'
-                    }`}>
-                      {isSelected ? '✓' : ''}
-                    </span>
-                    {u.name.split(' ')[0]}
+                    <span>{u.name.split(' ')[0]}</span>
+                    {isSelected && <Check className="w-3.5 h-3.5" />}
                   </button>
                 );
               })}
             </div>
           </div>
 
-          {/* Mathematical Preview Box (Viva Highlight) */}
-          <div className="bg-slate-50 p-3.5 rounded-xl border border-slate-200 flex items-center justify-between text-xs">
-            <div className="flex items-center space-x-2 text-slate-600">
-              <Calculator className="w-4 h-4 text-emerald-600" />
-              <span>Equal Share per Person:</span>
+          {/* Real-time Math Summary */}
+          {parsedAmount > 0 && (
+            <div className="p-3.5 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-semibold flex items-center justify-between">
+              <span>Fair Share Per Person:</span>
+              <span className="text-sm font-extrabold">₹{splitShare}</span>
             </div>
-            <span className="font-bold text-sm text-emerald-700">
-              ₹{splitShare} <span className="font-normal text-slate-400">/ person</span>
-            </span>
-          </div>
+          )}
 
           <div className="pt-2">
             <button
               type="submit"
-              disabled={submitting || parsedAmount <= 0}
-              className="w-full py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-medium rounded-lg shadow-sm transition flex items-center justify-center space-x-2 text-sm disabled:opacity-50"
+              disabled={submitting}
+              className="w-full py-3.5 px-4 rounded-xl bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-bold text-sm shadow-lg shadow-emerald-500/20 transition disabled:opacity-50"
             >
-              <span>{submitting ? 'Recording Split...' : 'Confirm & Split Expense'}</span>
+              {submitting ? 'Calculating...' : 'Save & Split Bill'}
             </button>
           </div>
+
         </form>
+
       </div>
     </div>
   );
