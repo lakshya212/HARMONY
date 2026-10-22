@@ -58,7 +58,7 @@ export default function AdminPage() {
               Flat / House Name
             </label>
             <p className="font-bold text-white text-base">{household.name}</p>
-            <p className="text-xs text-slate-400 mt-1">Created by Lakshya Sharma</p>
+            <p className="text-xs text-slate-400 mt-1">Created by Lakshya Shukla</p>
           </div>
 
           <div className="p-5 rounded-2xl bg-[#0D1322] border border-white/5 flex items-center justify-between">

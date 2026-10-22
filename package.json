@@ -8,6 +8,6 @@
     "build:frontend": "npm --prefix frontend run build",
     "start:backend": "npm --prefix backend start"
   },
-  "author": "Lakshya Sharma (BCA 5th Sem, IMS Noida)",
+  "author": "Lakshya Shukla (BCA 5th Sem, IMS Noida)",
   "license": "MIT"
 }

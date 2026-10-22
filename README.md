@@ -36,7 +36,7 @@ An intelligent, computational full-stack web application designed to eliminate s
    - Computes net balance: $\text{Net Balance}_i = \text{Total Paid}_i - \sum \text{Split Share}_{i,j}$.
    - Instant visual cues: green indicator for positive balance (to be reimbursed) and amber/red for negative balance (pending share).
 3. **Live Roommate Switcher (Viva Evaluation Mode):**
-   - 1-click switching between flatmates (**Lakshya Sharma [Admin]**, **Rahul Verma**, **Aman Gupta**, **Rohit Kumar**) in the top navigation bar to test role-based perspectives live in front of the examiners.
+   - 1-click switching between flatmates (**Lakshya Shukla [Admin]**, **Rahul Verma**, **Aman Gupta**, **Rohit Kumar**) in the top navigation bar to test role-based perspectives live in front of the examiners.
 4. **Dual Data Architecture (Offline-Safe & Cloud-Ready):**
    - **Offline Mock Store Engine:** Automatically activates if backend or internet is disconnected. Zero crashes during classroom vivas!
    - **Production PostgreSQL / Supabase:** Production-grade 3NF relational schema with Row-Level Security (RLS) triggers.

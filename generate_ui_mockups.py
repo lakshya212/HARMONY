@@ -192,7 +192,7 @@ def create_ui_dashboard():
 
     # Table rows
     t_rows = [
-        ("Lakshya Sharma", "Paid ₹3,900", "+₹1,450.00", "#059669"),
+        ("Lakshya Shukla", "Paid ₹3,900", "+₹1,450.00", "#059669"),
         ("Rahul Verma", "Paid ₹1,200", "-₹1,250.00", "#dc2626"),
         ("Aman Gupta", "Paid ₹3,600", "+₹1,150.00", "#059669"),
         ("Rohit Kumar", "Paid ₹1,100", "-₹1,350.00", "#dc2626")
@@ -233,7 +233,7 @@ def create_ui_admin():
     ax.add_patch(patches.FancyBboxPatch((4, 70), 92, 18, boxstyle="round,pad=0.8", facecolor="#ffffff", edgecolor="#e2e8f0", lw=1.5))
     ax.text(6, 83, "Flat Administration: Green Residency (Flat 402)", fontsize=10, fontweight='bold', color='#0f172a')
     ax.text(6, 78, "Active Invite Code: GRN101", fontsize=9, fontweight='bold', color='#2563eb')
-    ax.text(6, 73, "Created by: Lakshya Sharma | Registered Members: 4 | Flat Code Status: Active", fontsize=7.5, color='#64748b')
+    ax.text(6, 73, "Created by: Lakshya Shukla | Registered Members: 4 | Flat Code Status: Active", fontsize=7.5, color='#64748b')
 
     ax.add_patch(patches.FancyBboxPatch((74, 74), 18, 6, boxstyle="round,pad=0.3", facecolor="#475569"))
     ax.text(83, 77, "Regenerate Code", ha='center', va='center', fontsize=7.5, fontweight='bold', color='#ffffff')
@@ -247,7 +247,7 @@ def create_ui_admin():
         ax.text(hx, 56, h, fontsize=7.5, fontweight='bold', color='#475569')
 
     members = [
-        ("Lakshya Sharma", "lakshya@imsnoida.com", "Admin", "Active", "Primary Owner"),
+        ("Lakshya Shukla", "lakshya@imsnoida.com", "Admin", "Active", "Primary Owner"),
         ("Rahul Verma", "rahul@imsnoida.com", "Member", "Active", "[Remove]"),
         ("Aman Gupta", "aman@imsnoida.com", "Member", "Active", "[Remove]"),
         ("Rohit Kumar", "rohit@imsnoida.com", "Member", "Active", "[Remove]")

@@ -4,7 +4,7 @@
 // =============================================================================
 
 const profiles = [
-  { id: 'u1', email: 'lakshya@harmony.app', full_name: 'Lakshya Sharma', role: 'admin' },
+  { id: 'u1', email: 'lakshya@harmony.app', full_name: 'Lakshya Shukla', role: 'admin' },
   { id: 'u2', email: 'rahul@harmony.app', full_name: 'Rahul Verma', role: 'member' },
   { id: 'u3', email: 'aman@harmony.app', full_name: 'Aman Gupta', role: 'member' },
   { id: 'u4', email: 'rohit@harmony.app', full_name: 'Rohit Kumar', role: 'member' }

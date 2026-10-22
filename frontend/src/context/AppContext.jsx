@@ -6,7 +6,7 @@ const API_BASE = import.meta.env.VITE_API_URL ? `${import.meta.env.VITE_API_URL.
 
 // Initial clean demo flatmates for instant 0ms rendering and zero-friction evaluation
 const INITIAL_USERS = [
-  { id: 'u1', name: 'Lakshya Sharma', email: 'lakshya@harmony.app', role: 'admin', avatarColor: 'from-indigo-500 to-purple-600', initials: 'LS' },
+  { id: 'u1', name: 'Lakshya Shukla', email: 'lakshya@harmony.app', role: 'admin', avatarColor: 'from-indigo-500 to-purple-600', initials: 'LS' },
   { id: 'u2', name: 'Rahul Verma', email: 'rahul@harmony.app', role: 'member', avatarColor: 'from-emerald-500 to-teal-600', initials: 'RV' },
   { id: 'u3', name: 'Aman Gupta', email: 'aman@harmony.app', role: 'member', avatarColor: 'from-amber-500 to-orange-600', initials: 'AG' },
   { id: 'u4', name: 'Rohit Kumar', email: 'rohit@harmony.app', role: 'member', avatarColor: 'from-rose-500 to-pink-600', initials: 'RK' }
@@ -34,11 +34,11 @@ const INITIAL_TASKS = [
 ];
 
 const INITIAL_EXPENSES = [
-  { id: 'e1', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Sharma', description: 'September Electricity & Power Bill', amount: 2400.0, category: 'Utilities', expense_date: '2026-10-03', splits_count: 4 },
+  { id: 'e1', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Shukla', description: 'September Electricity & Power Bill', amount: 2400.0, category: 'Utilities', expense_date: '2026-10-03', splits_count: 4 },
   { id: 'e2', household_id: 'h1', paid_by: 'u2', paid_by_name: 'Rahul Verma', description: 'Airtel Xstream Fiber (300 Mbps Unlimited)', amount: 1200.0, category: 'Internet', expense_date: '2026-10-04', splits_count: 4 },
   { id: 'e3', household_id: 'h1', paid_by: 'u3', paid_by_name: 'Aman Gupta', description: 'Blinkit Bulk Household Ration & Dairy', amount: 3600.0, category: 'Food', expense_date: '2026-10-05', splits_count: 4 },
   { id: 'e4', household_id: 'h1', paid_by: 'u4', paid_by_name: 'Rohit Kumar', description: 'HP Gas Cooking Cylinder Refill', amount: 1100.0, category: 'Utilities', expense_date: '2026-10-06', splits_count: 4 },
-  { id: 'e5', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Sharma', description: 'Urban Company RO Service & Filter Replacement', amount: 1500.0, category: 'Supplies', expense_date: '2026-10-07', splits_count: 4 }
+  { id: 'e5', household_id: 'h1', paid_by: 'u1', paid_by_name: 'Lakshya Shukla', description: 'Urban Company RO Service & Filter Replacement', amount: 1500.0, category: 'Supplies', expense_date: '2026-10-07', splits_count: 4 }
 ];
 
 const INITIAL_DASHBOARD = {
@@ -49,13 +49,13 @@ const INITIAL_DASHBOARD = {
     totalMembers: 4
   },
   pointsData: [
-    { id: 'u1', name: 'Lakshya', full_name: 'Lakshya Sharma', points: 60 },
+    { id: 'u1', name: 'Lakshya', full_name: 'Lakshya Shukla', points: 60 },
     { id: 'u2', name: 'Rahul', full_name: 'Rahul Verma', points: 50 },
     { id: 'u3', name: 'Aman', full_name: 'Aman Gupta', points: 40 },
     { id: 'u4', name: 'Rohit', full_name: 'Rohit Kumar', points: 40 }
   ],
   balanceData: [
-    { id: 'u1', name: 'Lakshya Sharma', totalPaid: 3900, totalOwed: 2450, netBalance: 1450 },
+    { id: 'u1', name: 'Lakshya Shukla', totalPaid: 3900, totalOwed: 2450, netBalance: 1450 },
     { id: 'u2', name: 'Rahul Verma', totalPaid: 1200, totalOwed: 2450, netBalance: -1250 },
     { id: 'u3', name: 'Aman Gupta', totalPaid: 3600, totalOwed: 2450, netBalance: 1150 },
     { id: 'u4', name: 'Rohit Kumar', totalPaid: 1100, totalOwed: 2450, netBalance: -1350 }
