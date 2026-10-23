@@ -73,7 +73,64 @@ def add_code_block(doc, title, filename, code_content, description=None):
 def generate_report_with_code():
     print("Generating base academic documentation...")
     doc = generate_master_document()
+
+    # Find Table 4 (Table of Contents) and append Section 12 items
+    tbl_idx = doc.tables[4]
     
+    # Save the last row (References)
+    ref_row_sno = tbl_idx.cell(len(tbl_idx.rows)-1, 0).text
+    ref_row_title = tbl_idx.cell(len(tbl_idx.rows)-1, 1).text
+    ref_row_page = tbl_idx.cell(len(tbl_idx.rows)-1, 2).text
+
+    # Section 12 TOC Entries
+    sec12_entries = [
+        ("12", "Source Code Implementation & System Listings", "30"),
+        ("   12.1", "Database Relational DDL & Constraints (schema.sql)", "30"),
+        ("   12.2", "Backend Server Entrypoint (server.js)", "33"),
+        ("   12.3", "Express Middleware & Route Dispatcher (app.js)", "34"),
+        ("   12.4", "Household Management API Controller (households.js)", "35"),
+        ("   12.5", "Chore Engine API Controller (tasks.js)", "37"),
+        ("   12.6", "Expense Splitting API Controller (expenses.js)", "38"),
+        ("   12.7", "Frontend State Context & Failover Engine (AppContext.jsx)", "40"),
+        ("   12.8", "Roommate Interactive Dashboard Page (DashboardPage.jsx)", "45"),
+        ("   12.9", "Shared Expense Management Module (ExpensesPage.jsx)", "49"),
+        ("   12.10", "Chore Task Allocation Module (TasksPage.jsx)", "51"),
+        ("   12.11", "Household Administration Governance Console (AdminPage.jsx)", "53"),
+        ("   12.12", "Vite Build Tooling Configuration (vite.config.js)", "55"),
+        ("   12.13", "Vercel Edge SPA Rewrite Rules (vercel.json)", "56")
+    ]
+
+    # Modify the last row to become Section 12
+    last_r = tbl_idx.cell(len(tbl_idx.rows)-1, 0)
+    
+    for sno, title, pageno in sec12_entries:
+        row = tbl_idx.add_row()
+        c0, c1, c2 = row.cells
+        set_cell_margins(c0, 45, 45, 80, 80)
+        set_cell_margins(c1, 45, 45, 80, 80)
+        set_cell_margins(c2, 45, 45, 80, 80)
+        c0.paragraphs[0].add_run(sno).font.size = Pt(9.5)
+        p1 = c1.paragraphs[0]
+        r1 = p1.add_run(title)
+        r1.font.size = Pt(9.5)
+        if sno.strip() == "12":
+            r1.bold = True
+            c0.paragraphs[0].runs[0].bold = True
+        p2 = c2.paragraphs[0]
+        p2.alignment = WD_ALIGN_PARAGRAPH.RIGHT
+        p2.add_run(pageno).font.size = Pt(9.5)
+
+    # Re-append References at the very end
+    row_ref = tbl_idx.add_row()
+    c0, c1, c2 = row_ref.cells
+    set_cell_margins(c0, 45, 45, 80, 80)
+    set_cell_margins(c1, 45, 45, 80, 80)
+    set_cell_margins(c2, 45, 45, 80, 80)
+    c0.paragraphs[0].add_run("•").font.size = Pt(9.5)
+    c1.paragraphs[0].add_run(ref_row_title).font.size = Pt(9.5)
+    c2.paragraphs[0].alignment = WD_ALIGN_PARAGRAPH.RIGHT
+    c2.paragraphs[0].add_run("57").font.size = Pt(9.5)
+
     # Add page break for Section 12: Source Code Implementation
     doc.add_page_break()
     
@@ -192,7 +249,6 @@ def generate_standalone_code_document():
     print("Generating standalone Source Code Listing document...")
     doc = docx.Document()
     
-    # Set Margins
     for section in doc.sections:
         section.top_margin = Inches(1.0)
         section.bottom_margin = Inches(1.0)
@@ -200,7 +256,6 @@ def generate_standalone_code_document():
         section.right_margin = Inches(1.0)
         add_page_border(section)
 
-    # Title Page
     p_title = doc.add_paragraph()
     p_title.alignment = WD_ALIGN_PARAGRAPH.CENTER
     p_title.paragraph_format.space_before = Pt(40)
@@ -247,7 +302,6 @@ def generate_standalone_code_document():
 
     doc.add_page_break()
 
-    # Table of Files
     p_toc = doc.add_paragraph()
     p_toc.paragraph_format.space_before = Pt(12)
     p_toc.paragraph_format.space_after = Pt(8)
@@ -312,7 +366,6 @@ def generate_standalone_code_document():
 
     doc.add_page_break()
 
-    # Append each code file
     for s_no, (m_title, m_path, m_desc) in enumerate(files_to_include, start=1):
         if os.path.exists(m_path):
             with open(m_path, "r", encoding="utf-8") as f:

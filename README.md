@@ -43,6 +43,17 @@ An intelligent, computational full-stack web application designed to eliminate s
 
 ---
 
+## 🌐 Live Production Deployments
+
+| Deployment Channel | Live URL | Hosting Platform & Architecture |
+| :--- | :--- | :--- |
+| **Primary Live Application** | **[lakshya212.github.io/HARMONY](https://lakshya212.github.io/HARMONY/)** | GitHub Pages Edge CDN (Zero cold-start latency) |
+| **Secondary Live Application** | **[harmony-household.vercel.app](https://harmony-household.vercel.app)** | Vercel Global Edge Network (Vite SPA) |
+| **Application Backend REST API** | **[harmony-api.onrender.com/api/health](https://harmony-api.onrender.com/api/health)** | Render Web Service (Node.js & Express) |
+| **Public Source Code Repository** | **[github.com/lakshya212/HARMONY](https://github.com/lakshya212/HARMONY)** | GitHub (Main Branch with Automated CI/CD) |
+
+---
+
 ## 🛠️ Technology Stack
 
 | Layer | Technologies |
@@ -164,11 +175,13 @@ Visit `http://localhost:5173` in your browser. The frontend will communicate aut
 
 ---
 
-## 🎓 Academic Evaluation Checklist (BCA-508)
-- [x] Official CCSU Coat of Arms on Title Page
-- [x] College Proforma for Approval with mentor signature lines
-- [x] Certificate of Originality & Acknowledgment
-- [x] Mandatory Internship Certificate placeholder page
-- [x] All 11 Sections strictly followed in designated order
-- [x] Level 0, Level 1, Level 2 DFDs isolated on individual pages
-- [x] 100% functional live full-stack system deployable to Vercel/Render
+## 🎓 Academic Evaluation Checklist (BCA-508 Final Presentation)
+- [x] Official CCSU Coat of Arms & Academic Border on Title Page
+- [x] College Proforma for Approval (Option A Individual Copy for Lakshya Shukla)
+- [x] Student Declaration & Certificate from Guide (Mr. Nihal Kumar, Room DG4)
+- [x] Authentic Cannock Private Limited Internship Certificate (`CPL-INT-2026-012`)
+- [x] Complete 57-Page Final Project Report with Section 12 Source Code Appendix (`BCA_508_Minor_Project_Final_Documentation_and_Code.pdf`)
+- [x] Standalone 29-Page Monospace Source Code Listing Booklet (`BCA_508_HARMONY_Source_Code_Listing.pdf`)
+- [x] Level 0, Level 1, Level 2 DFDs isolated on individual pages (Pages 16, 17, 18)
+- [x] 14-Slide Widescreen (16:9) Final Presentation Deck (`BCA_508_Minor_Project_Presentation_HARMONY.pptx` & `.pdf`)
+- [x] 100% functional live application deployed on GitHub Pages and Vercel with resilient offline client fallback
