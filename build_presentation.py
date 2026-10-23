@@ -30,8 +30,7 @@ def create_deck():
         bg.line.fill.background()
         return bg
 
-    def add_header(slide, title_text, category_text="BCA-508 MINOR PROJECT REVIEW 1"):
-        # Category pill / banner
+    def add_header(slide, title_text, category_text="BCA-508 MINOR PROJECT FINAL PRESENTATION"):
         cat_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.4), Inches(11.7), Inches(0.4))
         tf_cat = cat_box.text_frame
         tf_cat.word_wrap = True
@@ -42,7 +41,6 @@ def create_deck():
         p_cat.font.bold = True
         p_cat.font.color.rgb = ACCENT_EMERALD
 
-        # Title
         title_box = slide.shapes.add_textbox(Inches(0.8), Inches(0.75), Inches(11.7), Inches(0.7))
         tf_title = title_box.text_frame
         tf_title.word_wrap = True
@@ -53,7 +51,6 @@ def create_deck():
         p_title.font.bold = True
         p_title.font.color.rgb = TEXT_WHITE
 
-        # Divider line
         div = slide.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(1.5), Inches(11.733), Inches(0.02))
         div.fill.solid()
         div.fill.fore_color.rgb = CARD_BORDER
@@ -64,7 +61,7 @@ def create_deck():
         tf = footer_box.text_frame
         tf.margin_left = tf.margin_top = tf.margin_right = tf.margin_bottom = 0
         p = tf.paragraphs[0]
-        p.text = f"HARMONY | Candidate: Lakshya Shukla (240919106121) | Guide: Mr. Nihal Kumar | IMS Noida (Panel 2 - DG4) | Slide {current_slide} of {total_slides}"
+        p.text = f"HARMONY | Candidate: Lakshya Shukla (240919106121) | Guide: Mr. Nihal Kumar | IMS Noida (Panel 2 - Room DG4) | Slide {current_slide} of {total_slides}"
         p.font.size = Pt(9)
         p.font.color.rgb = TEXT_MUTED
 
@@ -93,14 +90,12 @@ def create_deck():
     s1 = prs.slides.add_slide(blank_layout)
     add_slide_background(s1)
 
-    # Decorative top glow bar
-    bar = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(0.6), Inches(2.5), Inches(0.06))
+    bar = s1.shapes.add_shape(MSO_SHAPE.RECTANGLE, Inches(0.8), Inches(0.55), Inches(3.2), Inches(0.06))
     bar.fill.solid()
     bar.fill.fore_color.rgb = ACCENT_EMERALD
     bar.line.fill.background()
 
-    # Main Project Title Box
-    title_box = s1.shapes.add_textbox(Inches(0.8), Inches(0.8), Inches(11.7), Inches(2.2))
+    title_box = s1.shapes.add_textbox(Inches(0.8), Inches(0.75), Inches(11.7), Inches(2.25))
     tf = title_box.text_frame
     tf.word_wrap = True
     p0 = tf.paragraphs[0]
@@ -111,18 +106,18 @@ def create_deck():
 
     p1 = tf.add_paragraph()
     p1.text = "Shared Living Management & Conflict Resolution Platform"
-    p1.font.size = Pt(22)
+    p1.font.size = Pt(21)
     p1.font.bold = True
     p1.font.color.rgb = ACCENT_EMERALD
 
     p2 = tf.add_paragraph()
-    p2.text = "A Modern Full-Stack System for Automated Expense Splitting, Effort-Weighted Chore Allocation & Household Transparency"
-    p2.font.size = Pt(13)
+    p2.text = "Minor Project Final Presentation (BCA-508) | Full-Stack System for Expense Splitting, Effort Gamification & Household Transparency"
+    p2.font.size = Pt(12)
     p2.font.color.rgb = TEXT_MUTED
 
-    # Metadata Left Card (Academic Info)
-    add_card(s1, Inches(0.8), Inches(3.2), Inches(5.6), Inches(3.4), title="ACADEMIC CREDENTIALS")
-    tb_meta = s1.shapes.add_textbox(Inches(1.0), Inches(3.7), Inches(5.2), Inches(2.7))
+    # Academic info card
+    add_card(s1, Inches(0.8), Inches(3.2), Inches(5.6), Inches(3.45), title="ACADEMIC CREDENTIALS")
+    tb_meta = s1.shapes.add_textbox(Inches(1.0), Inches(3.7), Inches(5.2), Inches(2.8))
     tf_m = tb_meta.text_frame
     tf_m.word_wrap = True
 
@@ -144,25 +139,24 @@ def create_deck():
     add_meta_field(tf_m, "University Roll No", "240919106121 (Section B)")
     add_meta_field(tf_m, "College Email", "lakshyashukla.bcr24257@imsnoida.com")
     add_meta_field(tf_m, "Project Guide", "Mr. Nihal Kumar, Assistant Professor")
-    add_meta_field(tf_m, "Review Panel", "Panel 2 (Room DG4) | 1st Review: 24 Oct 2026")
+    add_meta_field(tf_m, "Review Panel", "Panel 2 (Room DG4) | Final Presentation Day")
     add_meta_field(tf_m, "Institution", "IMS Noida | Affiliated to CCS University, Meerut")
 
-    # Right Card: PROMINENT CLICKABLE LINKS FOR REVIEW PANEL
-    add_card(s1, Inches(6.7), Inches(3.2), Inches(5.8), Inches(3.4), title="MANDATORY REVIEW 1 LIVE LINKS", border_color=ACCENT_EMERALD)
-    tb_links = s1.shapes.add_textbox(Inches(6.9), Inches(3.7), Inches(5.4), Inches(2.7))
+    # Mandatory Live Links Card
+    add_card(s1, Inches(6.7), Inches(3.2), Inches(5.8), Inches(3.45), title="MANDATORY FINAL PRESENTATION LIVE LINKS", border_color=ACCENT_EMERALD)
+    tb_links = s1.shapes.add_textbox(Inches(6.9), Inches(3.7), Inches(5.4), Inches(2.8))
     tf_l = tb_links.text_frame
     tf_l.word_wrap = True
 
     pl0 = tf_l.paragraphs[0]
-    pl0.text = "Teacher & Panel Clickable Access (As Mandated for Review 1):"
+    pl0.text = "Clickable Production Access (As Mandated by Department):"
     pl0.font.size = Pt(11)
     pl0.font.italic = True
     pl0.font.color.rgb = TEXT_MUTED
 
-    # Link 1: Live Web Application
     pl1 = tf_l.add_paragraph()
     r = pl1.add_run()
-    r.text = "\n[LIVE PRODUCTION APP] "
+    r.text = "\n[LIVE PRODUCTION DEPLOYMENT] "
     r.font.size = Pt(12)
     r.font.bold = True
     r.font.color.rgb = ACCENT_EMERALD
@@ -175,10 +169,9 @@ def create_deck():
     r_url.font.color.rgb = ACCENT_CYAN
     r_url.hyperlink.address = "https://harmony-household.vercel.app"
 
-    # Link 2: GitHub Repository
     pl2 = tf_l.add_paragraph()
     r2 = pl2.add_run()
-    r2.text = "[PUBLIC GITHUB REPOSITORY] "
+    r2.text = "[PUBLIC GITHUB REPOSITORY & CODE] "
     r2.font.size = Pt(12)
     r2.font.bold = True
     r2.font.color.rgb = ACCENT_VIOLET
@@ -191,10 +184,9 @@ def create_deck():
     r2_url.font.color.rgb = ACCENT_CYAN
     r2_url.hyperlink.address = "https://github.com/lakshya212/HARMONY"
 
-    # Status note
     pl3 = tf_l.add_paragraph()
     r3 = pl3.add_run()
-    r3.text = "Architecture: React 18 + Node.js/Express + PostgreSQL\nOffline-Resilient Failover Layer Active for Zero-Downtime Viva."
+    r3.text = "Architecture: React 18 + Node.js/Express + PostgreSQL\nOffline-Resilient Failover Layer Active for Zero-Downtime Defense."
     r3.font.size = Pt(10)
     r3.font.color.rgb = ACCENT_AMBER
 
@@ -212,7 +204,7 @@ def create_deck():
     tf2_1 = tb2_1.text_frame
     tf2_1.word_wrap = True
     p = tf2_1.paragraphs[0]
-    p.text = "Shared Household Friction:\n\n• Asymmetric Financial Burden: Flatmates often lose track of who paid for groceries, utilities, and internet bills, causing awkward disputes.\n\n• The 'Chore Trap': Traditional tracking ignores effort disparity (e.g., taking out trash vs deep cleaning bathroom treated equally).\n\n• Unreliable Memory: Informal verbal agreements lead to resentment and roommate conflicts."
+    p.text = "Shared Household Friction:\n\n• Asymmetric Financial Burden: Flatmates and multi-earner households frequently lose track of who paid for groceries, utilities, and internet bills, causing awkward disputes.\n\n• The 'Chore Trap': Traditional chore tracking ignores effort disparity (e.g., taking out trash vs deep cleaning bathroom treated equally).\n\n• Unreliable Memory: Informal verbal agreements lead to resentment and roommate conflicts."
     p.font.size = Pt(11)
     p.font.color.rgb = TEXT_WHITE
 
@@ -230,7 +222,7 @@ def create_deck():
     tf2_3 = tb2_3.text_frame
     tf2_3.word_wrap = True
     p = tf2_3.paragraphs[0]
-    p.text = "BCA-508 Minor Project Scope:\n\n• Full-Stack Architecture: Modern React Single Page Application (SPA) consuming decoupled Node.js RESTful APIs.\n\n• Relational Integrity: Enforcing 3NF relational schemas with Foreign Keys and transactional integrity in PostgreSQL.\n\n• Production Cloud Deployment: Automated CD workflow with Vercel Edge hosting and cloud backend services.\n\n• Defensive Reliability: Dual-mode data resilience preventing viva failure during network outages."
+    p.text = "BCA-508 Minor Project Scope:\n\n• Full-Stack Architecture: Modern React Single Page Application (SPA) consuming decoupled Node.js RESTful APIs.\n\n• Relational Integrity: Enforcing 3NF relational schemas with Foreign Keys and transactional integrity in PostgreSQL.\n\n• Production Cloud Deployment: Automated CD workflow with Vercel Edge hosting and cloud backend services.\n\n• Defensive Reliability: Dual-mode data resilience preventing presentation failure during network outages."
     p.font.size = Pt(11)
     p.font.color.rgb = TEXT_WHITE
 
@@ -243,12 +235,10 @@ def create_deck():
     add_slide_background(s3)
     add_header(s3, "Three-Tier System Architecture & Tech Stack")
 
-    # Add Architecture Diagram on the left
     arch_img = "diagrams/diagram_architecture.png"
     if os.path.exists(arch_img):
         s3.shapes.add_picture(arch_img, Inches(0.8), Inches(1.8), Inches(6.2), Inches(4.9))
 
-    # Right Card: Detailed Architecture Walkthrough
     add_card(s3, Inches(7.3), Inches(1.8), Inches(5.2), Inches(4.9), title="TECHNICAL IMPLEMENTATION")
     tb3 = s3.shapes.add_textbox(Inches(7.5), Inches(2.4), Inches(4.8), Inches(4.1))
     tf3 = tb3.text_frame
@@ -267,7 +257,6 @@ def create_deck():
     add_slide_background(s4)
     add_header(s4, "Data Flow Diagrams (Context Level 0 & Level 1)")
 
-    # DFD Level 0 on Left
     add_card(s4, Inches(0.8), Inches(1.8), Inches(5.6), Inches(4.9), title="DFD LEVEL 0: CONTEXT MODEL")
     dfd0_img = "diagrams/diagram_dfd0.png"
     if os.path.exists(dfd0_img):
@@ -280,7 +269,6 @@ def create_deck():
     p.font.size = Pt(9.5)
     p.font.color.rgb = TEXT_MUTED
 
-    # DFD Level 1 on Right
     add_card(s4, Inches(6.8), Inches(1.8), Inches(5.7), Inches(4.9), title="DFD LEVEL 1: FUNCTIONAL DECOMPOSITION")
     dfd1_img = "diagrams/diagram_dfd1.png"
     if os.path.exists(dfd1_img):
@@ -378,17 +366,14 @@ def create_deck():
     add_slide_background(s8)
     add_header(s8, "Modern UI Design & Interactive Interface")
 
-    # Landing UI on Left
     landing_img = "diagrams/ui_landing.png"
     if os.path.exists(landing_img):
         s8.shapes.add_picture(landing_img, Inches(0.8), Inches(1.8), Inches(5.6), Inches(3.2))
 
-    # Dashboard UI on Right
     dash_img = "diagrams/ui_dashboard.png"
     if os.path.exists(dash_img):
         s8.shapes.add_picture(dash_img, Inches(6.8), Inches(1.8), Inches(5.7), Inches(3.2))
 
-    # Bottom Explanation Cards
     add_card(s8, Inches(0.8), Inches(5.2), Inches(5.6), Inches(1.6), title="LANDING PAGE & ONBOARDING")
     tb8_1 = s8.shapes.add_textbox(Inches(1.0), Inches(5.6), Inches(5.2), Inches(1.1))
     tf8_1 = tb8_1.text_frame
@@ -436,7 +421,7 @@ def create_deck():
     # ==========================================
     s10 = prs.slides.add_slide(blank_layout)
     add_slide_background(s10)
-    add_header(s10, "Quality Assurance, Testing & Viva Defense")
+    add_header(s10, "Quality Assurance, Testing & Presentation Defense")
 
     add_card(s10, Inches(0.8), Inches(1.8), Inches(3.6), Inches(4.9), title="TEST SUITE EXECUTION")
     tb10_1 = s10.shapes.add_textbox(Inches(1.0), Inches(2.4), Inches(3.2), Inches(4.1))
@@ -472,16 +457,15 @@ def create_deck():
     # ==========================================
     s11 = prs.slides.add_slide(blank_layout)
     add_slide_background(s11)
-    add_header(s11, "Cloud Deployment Architecture & Mandatory Live Links")
+    add_header(s11, "Cloud Deployment Topology & Mandatory Live Links")
 
-    # Prominent Central Card with the Links
     add_card(s11, Inches(0.8), Inches(1.8), Inches(11.733), Inches(4.9), title="PRODUCTION CLOUD DEPLOYMENT TOPOLOGY", border_color=ACCENT_EMERALD)
     tb11 = s11.shapes.add_textbox(Inches(1.1), Inches(2.4), Inches(11.1), Inches(4.1))
     tf11 = tb11.text_frame
     tf11.word_wrap = True
 
     p = tf11.paragraphs[0]
-    p.text = "Deployment Architecture Breakdown (Mandated by SOIT Department for 24 Oct Review 1):"
+    p.text = "Deployment Architecture Breakdown (Mandated by Department for Final Presentation):"
     p.font.size = Pt(13)
     p.font.bold = True
     p.font.color.rgb = ACCENT_EMERALD
@@ -549,22 +533,22 @@ def create_deck():
     add_footer(s11, 11)
 
     # ==========================================
-    # SLIDE 12: MILESTONE SUMMARY & VIVA CONCLUSION
+    # SLIDE 12: FINAL PRESENTATION SUMMARY & DEFENSE
     # ==========================================
     s12 = prs.slides.add_slide(blank_layout)
     add_slide_background(s12)
-    add_header(s12, "Milestone Summary & Viva Examination Q&A", category_text="MILESTONE 1 STATUS: 100% COMPLETE")
+    add_header(s12, "Final Presentation Summary & Viva Defense", category_text="MINOR PROJECT STATUS: 100% COMPLETE & DEPLOYED")
 
-    add_card(s12, Inches(0.8), Inches(1.8), Inches(5.6), Inches(4.9), title="DELIVERABLES CHECKLIST")
+    add_card(s12, Inches(0.8), Inches(1.8), Inches(5.6), Inches(4.9), title="FINAL DELIVERABLES READY")
     tb12_1 = s12.shapes.add_textbox(Inches(1.0), Inches(2.4), Inches(5.2), Inches(4.1))
     tf12_1 = tb12_1.text_frame
     tf12_1.word_wrap = True
     p = tf12_1.paragraphs[0]
-    p.text = "Academic Milestones Completed:\n\n[X] Formal Project Synopsis (BCA-508):\n    29-page comprehensive document printed per CCSU format with Cannock Private Limited certificate & DFD diagrams.\n\n[X] System Architecture & Database Design:\n    Complete 3NF relational schema, DFD Levels 0/1/2, and ERD.\n\n[X] Functional Full-Stack Application:\n    React SPA + Express API + PostgreSQL backend operational.\n\n[X] Public GitHub Repository:\n    Clean source tree with documentation & seed scripts.\n\n[X] Cloud Deployment & Live Link:\n    Accessible via browser on any device."
+    p.text = "Mandatory Submissions for Panel 2:\n\n[X] PDF of Project Along with Code:\n    Comprehensive documentation with Cannock Pvt Ltd certificate, DFDs, ERD, and Section 12 full source code appendix.\n\n[X] Project Deployment Link:\n    Production web app live on Vercel with resilient client fallback.\n\n[X] PPT for Presentation (Mandatory):\n    12-slide comprehensive presentation with live clickable links.\n\n[X] GitHub Source Code Repository:\n    Publicly accessible at github.com/lakshya212/HARMONY."
     p.font.size = Pt(11)
     p.font.color.rgb = TEXT_WHITE
 
-    add_card(s12, Inches(6.8), Inches(1.8), Inches(5.7), Inches(4.9), title="READY FOR PANEL 2 REVIEW", border_color=ACCENT_EMERALD)
+    add_card(s12, Inches(6.8), Inches(1.8), Inches(5.7), Inches(4.9), title="PANEL 2 VIVA PRESENTATION", border_color=ACCENT_EMERALD)
     tb12_2 = s12.shapes.add_textbox(Inches(7.0), Inches(2.4), Inches(5.3), Inches(4.1))
     tf12_2 = tb12_2.text_frame
     tf12_2.word_wrap = True
@@ -576,13 +560,12 @@ def create_deck():
     p.font.color.rgb = ACCENT_EMERALD
 
     p_sub = tf12_2.add_paragraph()
-    p_sub.text = "HARMONY: Computational Transparency for Shared Living\n\nCandidate: Lakshya Shukla (Roll No: 240919106121)\nProject Guide: Mr. Nihal Kumar, Assistant Professor\nDepartment of Information Technology, IMS Noida\nAffiliated to Ch. Charan Singh University, Meerut\n\nOpen for Questions from Panel 2:\n• Mr. Nihal Kumar\n• Ms. Shaili Nigam"
+    p_sub.text = "HARMONY: Computational Transparency for Shared Living\n\nCandidate: Lakshya Shukla (Roll No: 240919106121)\nProject Guide: Mr. Nihal Kumar, Assistant Professor\nDepartment of Information Technology, IMS Noida\nAffiliated to Ch. Charan Singh University, Meerut\n\nOpen for Final Presentation Questions from Panel 2:\n• Mr. Nihal Kumar\n• Ms. Shaili Nigam"
     p_sub.font.size = Pt(12)
     p_sub.font.color.rgb = TEXT_WHITE
 
     add_footer(s12, 12)
 
-    # Save presentation
     output_path = "BCA_508_Minor_Project_Presentation_HARMONY.pptx"
     prs.save(output_path)
     print(f"Successfully generated {output_path} ({len(prs.slides)} slides)")

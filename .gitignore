@@ -31,6 +31,8 @@ yarn-error.log*
 Thumbs.db
 
 # Temporary & Scratch
+__pycache__/
+*.pyc
 scratch/
 tmp/
 *.tmp
